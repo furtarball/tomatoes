@@ -7,7 +7,7 @@
 CC = g++
 COMPRESS = upx --best
 TARGET = ./tomatoes
-MARCH = pentium
+MARCH = x86-64
 
 
 # Directory defines, you can use these defaults or adjust them if

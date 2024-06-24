@@ -31,7 +31,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-#include "SDL.h"
+#include <SDL2/SDL.h>
 #ifdef WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>

@@ -28,7 +28,7 @@
 *************************************************************************/
 
 #include <stdlib.h>
-#include "SDL.h"
+#include <SDL2/SDL.h>
 #include "SDL_opengl.h"
 #include "pathfinder.h"
 #include "tilemap.h"

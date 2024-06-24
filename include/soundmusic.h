@@ -30,8 +30,8 @@
 #ifndef SOUNDMUSIC_H
 #define SOUNDMUSIC_H
 
-#include "SDL.h"
-#include "SDL_mixer.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 
 // Current music module
 extern Mix_Music *music_mod;

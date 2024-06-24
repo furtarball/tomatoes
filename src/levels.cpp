@@ -29,7 +29,7 @@
 
 #include <stdio.h>
 #include <vector>
-#include "SDL.h"
+#include <SDL2/SDL.h>
 #include "SDL_opengl.h"
 #include "mpak.h"
 #include "levels.h"

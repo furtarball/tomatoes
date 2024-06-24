@@ -30,9 +30,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "SDL.h"
+#include <SDL2/SDL.h>
 #include "SDL_opengl.h"
-#include "SDL_image.h"
+#include <SDL2/SDL_image.h>
 #include "init.h"
 #include "timer.h"
 

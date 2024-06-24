@@ -29,8 +29,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "SDL.h"
-#include "SDL_mixer.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 #include "game.h"
 #include <string.h>
 #include <dirent.h>

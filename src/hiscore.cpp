@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "SDL.h"
+#include <SDL2/SDL.h>
 #include "SDL_opengl.h"
 #include "init.h"
 #include "font.h"
