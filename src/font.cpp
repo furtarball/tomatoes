@@ -205,6 +205,7 @@ void glprint_num(float x, float y, float z, char *string) {
 			// Draw the number
 			c -= 48;
 			glCallList(c + font_num_base);
+			glTranslatef(0, 0, 0);
 		}
 	}
 
