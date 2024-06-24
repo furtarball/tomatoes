@@ -31,7 +31,7 @@
 #define GAME_H
 
 // Array containing currently pressed keys
-extern Uint8 key[SDLK_LAST];
+extern Uint8 key[SDL_NUM_SCANCODES];
 
 // Kill count
 extern int kill_count;

@@ -78,7 +78,7 @@ static float light_position2[] = { -MAP_W*0.5f, 2.0f, MAP_H*0.25f, 1.0f };
 
 
 // Array containing currently pressed keys
-Uint8 key[SDLK_LAST];
+Uint8 key[SDL_NUM_SCANCODES];
 
 // Kill count
 int kill_count;
