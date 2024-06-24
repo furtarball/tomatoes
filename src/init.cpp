@@ -114,7 +114,7 @@ void init_sdl_and_gl() {
 	icon = SDL_LoadBMP_RW(SDL_RWFromFP(fin, SDL_TRUE), 1);
 	if(!icon)
 		error_msg("Unable to load the icon!\n");
-	SDL_SetColorKey(icon, SDL_SRCCOLORKEY, SDL_MapRGB(icon->format, 255, 0, 255));
+	SDL_SetColorKey(icon, SDL_TRUE, SDL_MapRGB(icon->format, 255, 0, 255));
 	SDL_SetWindowIcon(window, icon);
 	SDL_FreeSurface(icon);
 
