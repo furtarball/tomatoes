@@ -123,7 +123,7 @@ void HISCORE_LIST::input_name(int place) {
 	by_roll = RANDF(0,1);
 	bx_roll_dir = RANDF(-0.001f,0.001f);
 	by_roll_dir = RANDF(-0.001f,0.001f);
-	memset(key, 0, sizeof(key));
+	key.clear();
 
 	// Fade in
 	fading = 1;
@@ -274,7 +274,7 @@ void HISCORE_LIST::input_name(int place) {
 			}
 
 			// Clear the key array
-			memset(key, 0, sizeof(key));
+			key.clear();
 
 			// Animate the background
 			back_anim = add_angle(back_anim, 2.0f);

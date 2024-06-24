@@ -59,7 +59,7 @@ MPAK_FILE pakfile;
 
 
 // Display an error message and quit
-void error_msg(char *msg, ...) {
+void error_msg(const char *msg, ...) {
 
 	char *buf = new char[4096];
 

@@ -46,7 +46,7 @@
 extern GLuint maptex[NUM_TEX];
 
 // Map array with two layers
-extern GLuint map[MAP_W][MAP_H][2];
+extern GLuint mapl[MAP_W][MAP_H][2];
 
 // Teleport array
 extern bool teleport_map[MAP_W][MAP_H];

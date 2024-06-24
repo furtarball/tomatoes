@@ -50,7 +50,7 @@ extern MPAK_FILE pakfile;
 void init_sdl_and_gl();
 
 // Display an error message and quit
-void error_msg(char *msg, ...);
+void error_msg(const char *msg, ...);
 
 #endif
 

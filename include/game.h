@@ -29,9 +29,10 @@
 
 #ifndef GAME_H
 #define GAME_H
+#include <map>
 
 // Array containing currently pressed keys
-extern Uint8 key[SDL_NUM_SCANCODES];
+extern std::map<SDL_Keycode, Uint8> key;
 
 // Kill count
 extern int kill_count;

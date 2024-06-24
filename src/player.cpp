@@ -144,7 +144,7 @@ void draw_player_icons() {
 		#endif
 
 		// If we're jumped over a block, raise the icon up
-		if(map[p1.x][p1.y][1])
+		if(mapl[p1.x][p1.y][1])
 			glTranslatef(0, TILE_H, 0);
 
 		// If we're jumping, translate up to the position
@@ -153,7 +153,7 @@ void draw_player_icons() {
 			float jy = p1.jump_height * SIN(180.0f * p1.jump_pos);
 
 			// If we're jumping to a block, make sure we don't "sink" in it
-			if(map[p1.jump_tx][p1.jump_ty][1] && jy < TILE_H && p1.jump_pos > 0.5f)
+			if(mapl[p1.jump_tx][p1.jump_ty][1] && jy < TILE_H && p1.jump_pos > 0.5f)
 				jy = TILE_H;
 
 			glTranslatef(0, jy, 0);
@@ -211,7 +211,7 @@ void draw_player_icons() {
 		#endif
 
 		// If we're jumped over a block, raise the icon up
-		if(map[p2.x][p2.y][1])
+		if(mapl[p2.x][p2.y][1])
 			glTranslatef(0, TILE_H, 0);
 
 		// If we're jumping, translate up to the position
@@ -220,7 +220,7 @@ void draw_player_icons() {
 			float jy = p2.jump_height * SIN(180.0f * p2.jump_pos);
 
 			// If we're jumping to a block, make sure we don't "sink" in it
-			if(map[p2.jump_tx][p2.jump_ty][1] && jy < TILE_H && p2.jump_pos > 0.5f)
+			if(mapl[p2.jump_tx][p2.jump_ty][1] && jy < TILE_H && p2.jump_pos > 0.5f)
 				jy = TILE_H;
 
 			glTranslatef(0, jy, 0);
@@ -417,7 +417,7 @@ void PLAYER::move() {
 
 
 		// This is a dirty hack. Read the comments from the beginning of this file.
-		if(map[jump_tx][jump_ty][1] && jump_pos > 0.9f) {
+		if(mapl[jump_tx][jump_ty][1] && jump_pos > 0.9f) {
 			players_on_block_x[who2] = jump_tx;
 			players_on_block_y[who2] = jump_ty;
 		}
@@ -426,7 +426,7 @@ void PLAYER::move() {
 	}
 
 	// This is a dirty hack. Read the comments from the beginning of this file.
-	if(map[x][y][1]) {
+	if(mapl[x][y][1]) {
 		players_on_block_x[who2] = x;
 		players_on_block_y[who2] = y;
 		//return;
@@ -901,9 +901,9 @@ void PLAYER::draw() {
 		// If we're over a block, raise the shadow a bit higher
 		jpox = (int)(x + offx + 0.5f + jpos.x);
 		jpoy = (int)(y + offz + 0.5f + jpos.z);
-		if(map[jpox][jpoy][1])
+		if(mapl[jpox][jpoy][1])
 			shadow_offset = TILE_H + 0.01f;
-		else if(!map[jpox][jpoy][0])
+		else if(!mapl[jpox][jpoy][0])
 			// Translate a waaaay down, so that the shadow can't be seen
 			shadow_offset = -100.0f;
 	}
@@ -911,7 +911,7 @@ void PLAYER::draw() {
 
 
 	// If we're jumped over a block, raise the player up
-	if(map[x][y][1]) {
+	if(mapl[x][y][1]) {
 		glTranslatef(0, TILE_H, 0);
 		shadow_offset = 0.01f;
 	}
@@ -937,7 +937,7 @@ void PLAYER::draw() {
 		float jy = jump_height * SIN(180.0f * jump_pos);
 
 		// If we're jumping to a block, make sure we don't "sink" in it
-		if(map[jump_tx][jump_ty][1] && jy < TILE_H && jump_pos > 0.5f)
+		if(mapl[jump_tx][jump_ty][1] && jy < TILE_H && jump_pos > 0.5f)
 			jy = TILE_H;
 
 		glTranslatef(0, jy, 0);

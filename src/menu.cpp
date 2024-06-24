@@ -549,7 +549,7 @@ int show_menu(int menu_id) {
 	mid_fade_dir = 1;
 	mid_state = 1;
 	mid_state_wait = 3 * 60;
-	memset(key, 0, sizeof(key));
+	key.clear();
 	setting_key = false;
 	key_to_set = NULL;
 	whose_keys = 0;
@@ -841,7 +841,7 @@ int show_menu(int menu_id) {
 
 
 			// Clear the key array
-			memset(key, 0, sizeof(key));
+			key.clear();
 
 			// Animate the background
 			back_anim = add_angle(back_anim, 2.0f);

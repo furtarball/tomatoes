@@ -28,6 +28,7 @@
 *************************************************************************/
 
 #include <stdio.h>
+#include <map>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_image.h>
@@ -79,7 +80,7 @@ static float light_position2[] = { -MAP_W*0.5f, 2.0f, MAP_H*0.25f, 1.0f };
 
 
 // Array containing currently pressed keys
-Uint8 key[SDL_NUM_SCANCODES];
+std::map<SDL_Keycode, Uint8> key;
 
 // Kill count
 int kill_count;
@@ -311,7 +312,7 @@ bool handle_event(SDL_Event &event) {
 // Start the game
 void start_game(bool two_pls) {
 	// Initialize
-	memset(key, 0, sizeof(key));
+	key.clear();
 	clear_comments();
 	clear_map();
 	clear_enemies();

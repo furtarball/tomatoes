@@ -510,7 +510,7 @@ void SP_FLOWERPOWER::draw() {
 // Helper function which gets a random position block to which the player can
 // teleport
 bool block_teleport(int tx, int ty) {
-	if(!map[tx][ty][1])
+	if(!mapl[tx][ty][1])
 		return false;
 
 	int count = 0;

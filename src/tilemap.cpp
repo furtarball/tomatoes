@@ -50,7 +50,7 @@ GLuint map_dlist;
 
 
 // Map array with two layers
-GLuint map[MAP_W][MAP_H][2];
+GLuint mapl[MAP_W][MAP_H][2];
 
 // Teleport array
 bool teleport_map[MAP_W][MAP_H];
@@ -106,11 +106,11 @@ bool map_solid(int x, int y) {
 		return true;
 
 	// Check the blocks first
-	if(map[x][y][1])
+	if(mapl[x][y][1])
 		return true;
 
 	// .. and then the floor tiles
-	return bool(!map[x][y][0]);
+	return bool(!mapl[x][y][0]);
 }
 
 
@@ -119,7 +119,7 @@ bool is_block_at(int x, int y) {
 	if(x < 0 || y < 0 || x > MAP_W-1 || y > MAP_H-1)
 		return false;
 
-	return bool(map[x][y][1]);
+	return bool(mapl[x][y][1]);
 }
 
 
@@ -139,7 +139,7 @@ void build_map() {
 		for(int x=0; x<MAP_W; x++) {
 
 			// Draw the upper tile
-			if(map[x][y][1]) {
+			if(mapl[x][y][1]) {
 				BIND_TEXTURE(maptex[tile_roof_tex]);
 
 				// Top
@@ -153,7 +153,7 @@ void build_map() {
 				glEnd();
 
 				// Left
-				BIND_TEXTURE(maptex[map[x][y][1] - 1]);
+				BIND_TEXTURE(maptex[mapl[x][y][1] - 1]);
 				glColor3f(1,1,1);
 				if(!is_block_at(x,y+1)) {
 					glBegin(GL_TRIANGLE_STRIP);
@@ -178,9 +178,9 @@ void build_map() {
 			}
 
 			// Draw the lower tile
-			else if(map[x][y][0]) {
+			else if(mapl[x][y][0]) {
 				glDepthMask(GL_FALSE);
-				BIND_TEXTURE(maptex[map[x][y][0] - 1]);
+				BIND_TEXTURE(maptex[mapl[x][y][0] - 1]);
 				glBegin(GL_TRIANGLE_STRIP);
 					glNormal3f(0,1,0);
 					glTexCoord2f(1,1); glVertex3f(x+1,0,y);
@@ -217,12 +217,12 @@ void draw_map() {
 			for(int x=0; x<MAP_W; x++) {
 
 				// Draw the upper tile
-				if(map[x][y][1]) {
+				if(mapl[x][y][1]) {
 					// Is the player on this tile?
 					bool player_over = ((players_on_block_x[0] == x && players_on_block_y[0] == y) || (players_on_block_x[1] == x && players_on_block_y[1] == y)) ? true : false;
 
 					// Left
-					BIND_TEXTURE(maptex[map[x][y][1] - 1]);
+					BIND_TEXTURE(maptex[mapl[x][y][1] - 1]);
 					glColor3f(1,1,1);
 					if(!is_block_at(x,y+1)) {
 						glBegin(GL_TRIANGLE_STRIP);
@@ -298,9 +298,9 @@ void draw_map() {
 				}
 
 				// Draw the lower tile
-				else if(map[x][y][0]) {
+				else if(mapl[x][y][0]) {
 					glDepthMask(GL_FALSE);
-					BIND_TEXTURE(maptex[map[x][y][0] - 1]);
+					BIND_TEXTURE(maptex[mapl[x][y][0] - 1]);
 					glBegin(GL_TRIANGLE_STRIP);
 						glNormal3f(0,1,0);
 						glTexCoord2f(1,1); glVertex3f(x+1,0,y);
@@ -324,7 +324,7 @@ void draw_map() {
 		for(int x=0; x<MAP_W; x++) {
 
 			// Draw the upper tile
-			if(map[x][y][1]) {
+			if(mapl[x][y][1]) {
 				BIND_TEXTURE(maptex[tile_roof_tex]);
 
 				// Top
@@ -338,7 +338,7 @@ void draw_map() {
 				glEnd();
 
 				// Left
-				BIND_TEXTURE(maptex[map[x][y][1] - 1]);
+				BIND_TEXTURE(maptex[mapl[x][y][1] - 1]);
 				glColor3f(1,1,1);
 				if(!is_block_at(x,y+1)) {
 					glBegin(GL_TRIANGLE_STRIP);
@@ -363,9 +363,9 @@ void draw_map() {
 			}
 
 			// Draw the lower tile
-			else if(map[x][y][0]) {
+			else if(mapl[x][y][0]) {
 				glDepthMask(GL_FALSE);
-				BIND_TEXTURE(maptex[map[x][y][0] - 1]);
+				BIND_TEXTURE(maptex[mapl[x][y][0] - 1]);
 				glBegin(GL_TRIANGLE_STRIP);
 					glNormal3f(0,1,0);
 					glTexCoord2f(1,1); glVertex3f(x+1,0,y);
@@ -451,8 +451,8 @@ void save_map(char *file) {
 	for(int y=0; y < MAP_H; y++) {
 		for(int x=0; x < MAP_W; x++) {
 			// Save the floors and blocks
-			fputc(map[x][y][0], f);
-			fputc(map[x][y][1], f);
+			fputc(mapl[x][y][0], f);
+			fputc(mapl[x][y][1], f);
 
 			// Save the teleport marks
 			fputc((teleport_map[x][y]) ? 1 : 0, f);
@@ -516,8 +516,8 @@ void load_map(char *file) {
 	for(int y=0; y < MAP_H; y++) {
 		for(int x=0; x < MAP_W; x++) {
 			// Get the floors and blocks
-			map[x][y][0] = fgetc(f);
-			map[x][y][1] = fgetc(f);
+			mapl[x][y][0] = fgetc(f);
+			mapl[x][y][1] = fgetc(f);
 
 			// Get the teleport marks
 			teleport_map[x][y] = (fgetc(f)) ? true : false;
@@ -535,8 +535,8 @@ void load_map(char *file) {
 void clear_map() {
 	for(int y=0; y<MAP_H; y++) {
 		for(int x=0; x<MAP_W; x++) {
-			map[x][y][0] = 1;
-			map[x][y][1] = 0;
+			mapl[x][y][0] = 1;
+			mapl[x][y][1] = 0;
 			teleport_map[x][y] = false;
 		}
 	}
