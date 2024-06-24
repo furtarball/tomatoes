@@ -49,7 +49,7 @@
 
 
 // Version
-#define VERSION		"v1.55"
+#define VERSION		"v1.6"
 
 
 // Menu textures

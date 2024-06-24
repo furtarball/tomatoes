@@ -73,7 +73,7 @@ string get_tomatoes_dir();
 char *get_hiscore_location(int which, bool write) {
 #ifdef LINUX
 	// Get the path to the hiscore file
-	string tmp;
+	static string tmp;
 	if(which == 1)
 		tmp = get_tomatoes_dir() + HISCORE_FILE;
 	else

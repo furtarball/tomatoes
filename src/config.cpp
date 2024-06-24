@@ -79,7 +79,7 @@ string get_tomatoes_dir() {
 char *get_config_location(bool write) {
 #ifdef LINUX
 	// Get the path to the config file
-	string tmp = get_tomatoes_dir() + "config.cfg";
+	static string tmp = get_tomatoes_dir() + "config.cfg";
 
 	// Check if the config file exists there
 	if(!write) {
