@@ -46,7 +46,7 @@
 
 // Keep a global pointer to the window and OpenGL context
 SDL_Window *window;
-SDL_GLContext *glctx;
+SDL_GLContext glctx;
 
 
 // Keep a global pointer to the config
@@ -111,11 +111,11 @@ void init_sdl_and_gl() {
 	FILE *fin = pakfile.open_file("icon.bmp");
 	if(!fin)
 		error_msg("Unable to load the icon!\n");
-	icon = SDL_LoadBMP_RW(SDL_RWFromFP(fin, 1), 1);
+	icon = SDL_LoadBMP_RW(SDL_RWFromFP(fin, SDL_TRUE), 1);
 	if(!icon)
 		error_msg("Unable to load the icon!\n");
 	SDL_SetColorKey(icon, SDL_SRCCOLORKEY, SDL_MapRGB(icon->format, 255, 0, 255));
-	SDL_WM_SetIcon(icon, NULL);
+	SDL_SetWindowIcon(window, icon);
 	SDL_FreeSurface(icon);
 
 	// Initialize math tables
@@ -129,11 +129,11 @@ void init_sdl_and_gl() {
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		
 	// config.vid_color_depth won't be respected anymore
-	window = SDL_CreateWindow("I Have No Tomatoes", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, config.vid_w, config.vid_h, (config.fullscreen) ? (SDL_OPENGL|SDL_FULLSCREEN) : (SDL_OPENGL));
-	if(screen == NULL)
+	window = SDL_CreateWindow("I Have No Tomatoes", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, config.vid_w, config.vid_h, (config.fullscreen) ? (SDL_WINDOW_OPENGL|SDL_WINDOW_FULLSCREEN) : (SDL_WINDOW_OPENGL));
+	if(window == NULL)
 		error_msg("Unable to create SDL window %d x %d!\n%s", config.vid_w, config.vid_h, SDL_GetError());
 	glctx = SDL_GL_CreateContext(window);
-	if(screen == NULL)
+	if(glctx == NULL)
 		error_msg("Unable to create OpenGL context!\n%s", SDL_GetError());
 
 	// Set OpenGL settings

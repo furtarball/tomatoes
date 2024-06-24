@@ -36,7 +36,7 @@
 struct SDL_Window;
 extern SDL_Window *window;
 typedef void *SDL_GLContext;
-extern SDL_GLContext *glctx;
+extern SDL_GLContext glctx;
 
 // Keep a global pointer to the config
 extern CONFIG config;
