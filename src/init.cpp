@@ -99,7 +99,7 @@ void init_sdl_and_gl() {
 		error_msg("Unable to init SDL: %s", SDL_GetError());
 
 	// Hide the mouse cursor
-	SDL_ShowCursor(0);
+	SDL_ShowCursor(SDL_DISABLE);
 
 	// Open the pakfile, with globally define OVERRIDE_DIR being the override directory
 	pakfile.init();
