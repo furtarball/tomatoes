@@ -99,7 +99,7 @@ void loading_screen() {
 
 	// Flush and swap the buffers
 	glFlush();
-	SDL_GL_SwapBuffers();
+	SDL_GL_SwapWindow(window);
 }
 
 
@@ -161,7 +161,8 @@ int main(int argc, char *argv[]) {
 	// Free stuff
 	delete_font_list();
 	kill_particles();
-
+        SDL_DestroyWindow(window);
+        SDL_GL_DeleteContext(glctx);
 
 	// Kill SDL
 	SDL_Quit();

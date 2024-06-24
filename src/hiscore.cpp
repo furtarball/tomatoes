@@ -337,7 +337,7 @@ void HISCORE_LIST::input_name(int place) {
 
 		// Flush and swap the buffers
 		glFlush();
-		SDL_GL_SwapBuffers();
+		SDL_GL_SwapWindow(window);
 	}
 
 	SDL_EnableKeyRepeat(0,0);

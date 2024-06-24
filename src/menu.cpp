@@ -898,7 +898,7 @@ int show_menu(int menu_id) {
 
 		// Flush and swap the buffers
 		glFlush();
-		SDL_GL_SwapBuffers();
+		SDL_GL_SwapWindow(window);
 
 	}
 

@@ -32,9 +32,11 @@
 
 #include "config.h"
 
-// Keep a global pointer to the screen
-struct SDL_Surface;
-extern SDL_Surface *screen;
+// Keep a global pointer to the window and OpenGL context
+struct SDL_Window;
+extern SDL_Window *window;
+typedef void *SDL_GLContext;
+extern SDL_GLContext *glctx;
 
 // Keep a global pointer to the config
 extern CONFIG config;

@@ -44,8 +44,9 @@
 #include "mymath.h"
 
 
-// Keep a global pointer to the screen
-SDL_Surface *screen;
+// Keep a global pointer to the window and OpenGL context
+SDL_Window *window;
+SDL_GLContext *glctx;
 
 
 // Keep a global pointer to the config
@@ -100,9 +101,6 @@ void init_sdl_and_gl() {
 	// Hide the mouse cursor
 	SDL_ShowCursor(0);
 
-	// Set window caption
-	SDL_WM_SetCaption("I Have No Tomatoes", "I Have No Tomatoes");
-
 	// Open the pakfile, with globally define OVERRIDE_DIR being the override directory
 	pakfile.init();
 	if(!pakfile.open_mpk(MPAK_READ, MPK_DIR "tomatoes.mpk", OVERRIDE_DIR))
@@ -129,10 +127,14 @@ void init_sdl_and_gl() {
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
-	screen = SDL_SetVideoMode(config.vid_w, config.vid_h, config.vid_color_depth, (config.fullscreen) ? (SDL_OPENGL|SDL_FULLSCREEN) : (SDL_OPENGL));
+		
+	// config.vid_color_depth won't be respected anymore
+	window = SDL_CreateWindow("I Have No Tomatoes", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, config.vid_w, config.vid_h, (config.fullscreen) ? (SDL_OPENGL|SDL_FULLSCREEN) : (SDL_OPENGL));
 	if(screen == NULL)
-		error_msg("Unable to set the OpenGL video mode %d x %d (%d bit)!\n%s", config.vid_w, config.vid_h, config.vid_color_depth, SDL_GetError());
+		error_msg("Unable to create SDL window %d x %d!\n%s", config.vid_w, config.vid_h, SDL_GetError());
+	glctx = SDL_GL_CreateContext(window);
+	if(screen == NULL)
+		error_msg("Unable to create OpenGL context!\n%s", SDL_GetError());
 
 	// Set OpenGL settings
 	glEnable(GL_DEPTH_TEST);
@@ -152,7 +154,9 @@ void init_sdl_and_gl() {
 	else
 		glEnable(GL_DITHER);
 
-	glViewport(0, 0, screen->w, screen->h);
+	int screen_w, screen_h;
+	SDL_GetWindowSize(window, &screen_w, &screen_h);
+	glViewport(0, 0, screen_w, screen_h);
 	glColorMaterial(GL_FRONT, GL_DIFFUSE);
 	glEnable(GL_COLOR_MATERIAL);
 
