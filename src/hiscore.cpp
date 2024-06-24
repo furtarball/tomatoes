@@ -170,7 +170,7 @@ void HISCORE_LIST::input_name(int place) {
 			cursor_blink %= 20;
 
 			// Get the keyboard modifiers
-			SDLMod keymods = SDL_GetModState();
+			SDL_Keymod keymods = SDL_GetModState();
 
 			// Check input
 			typed = true;
