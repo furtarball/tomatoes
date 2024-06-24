@@ -129,9 +129,6 @@ void HISCORE_LIST::input_name(int place) {
 	fading = 1;
 	fade_amount = 1.0f;
 
-
-	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-
 	// Loop
 	timer_count = 0;
 	bool done = false;
@@ -341,7 +338,6 @@ void HISCORE_LIST::input_name(int place) {
 		SDL_GL_SwapWindow(window);
 	}
 
-	SDL_EnableKeyRepeat(0,0);
 }
 
 

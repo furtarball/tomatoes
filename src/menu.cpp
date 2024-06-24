@@ -563,9 +563,6 @@ int show_menu(int menu_id) {
 	fading = 1;
 	fade_amount = 1.0f;
 
-	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-
-
 	// Menu loop
 	bool menu_loop = true;
 	timer_count = 0;
@@ -903,7 +900,6 @@ int show_menu(int menu_id) {
 
 	}
 
-	SDL_EnableKeyRepeat(0,0);
 	return action;
 }
 
