@@ -41,14 +41,14 @@ SDL_FLAGS = `sdl-config --cflags`
 # Debugmode stuff
 ifdef DEBUGMODE
 CFLAGS = -MMD -g3 -W -Wall -mcpu=$(MARCH) -DDEBUGMODE
-LDFLAGS = `sdl-config --libs` -lSDL_image -lSDL_mixer -lGL -lGLU
+LDFLAGS = `sdl2-config --libs` -lSDL2_image -lSDL2_mixer -lGL -lGLU
 else
 ifdef PROFILE
 CFLAGS = -MMD -g3 -O3 -march=$(MARCH) -Wall -pg
-LDFLAGS = `sdl-config --libs` -lSDL_image -lSDL_mixer -lGL -lGLU -pg
+LDFLAGS = `sdl2-config --libs` -lSDL2_image -lSDL2_mixer -lGL -lGLU -pg
 else
 CFLAGS = -MMD -O3 -march=$(MARCH) -Wall $(SDL_FLAGS)
-LDFLAGS = `sdl-config --libs` -lSDL_image -lSDL_mixer -lGL -lGLU -s
+LDFLAGS = `sdl2-config --libs` -lSDL2_image -lSDL2_mixer -lGL -lGLU -s
 endif
 endif
 

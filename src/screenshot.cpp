@@ -87,13 +87,15 @@ void save_screenshot() {
 	}
 #endif
 
+        int screen_w, screen_h;
+	SDL_GetWindowSize(window, &screen_w, &screen_h);
 	// Read the data
-	image_data = (unsigned char*)malloc(screen->w * screen->h * 3);
-	memset(image_data, 0, screen->w * screen->h * 3);
-	glReadPixels(0, 0, screen->w, screen->h, GL_RGB, GL_UNSIGNED_BYTE, image_data);
+	image_data = (unsigned char*)malloc(screen_w * screen_h * 3);
+	memset(image_data, 0, screen_w * screen_h * 3);
+	glReadPixels(0, 0, screen_w, screen_h, GL_RGB, GL_UNSIGNED_BYTE, image_data);
 
 	// Write the data
-	save_tga(temp, screen->w, screen->h, image_data);
+	save_tga(temp, screen_w, screen_h, image_data);
 
 	// Free the data
 	free(image_data);

@@ -99,9 +99,9 @@ char *key_name(int key) {
 		// Get the key name from SDL
 		static char buf[32];
 #ifdef WIN32
-		_snprintf(buf, 32, "%s", SDL_GetKeyName((SDLKey)key));
+		_snprintf(buf, 32, "%s", SDL_GetKeyName((SDL_Keycode)key));
 #else
-		snprintf(buf, 32, "%s", SDL_GetKeyName((SDLKey)key));
+		snprintf(buf, 32, "%s", SDL_GetKeyName((SDL_Keycode)key));
 #endif
 
 		if(strcmp(buf, "left") == 0)

@@ -98,7 +98,7 @@ GLuint load_texture(char *file, char *img_type, bool alpha, bool repeat, bool mi
 		error_msg("Unable to load texture from %s!\nSomething is wrong with the pakfile.", file);
 
 	SDL_RWops *rw;
-	rw = SDL_RWFromFP(fin, 1);
+	rw = SDL_RWFromFP(fin, SDL_TRUE);
 	img = IMG_LoadTyped_RW(rw,0, img_type);
 	if(img == NULL)
 		error_msg("Unable to load texture from %s!\n%s", file, IMG_GetError());
@@ -197,7 +197,7 @@ void load_texture_into(GLuint tex, char *file, char *img_type, bool alpha, bool 
 		error_msg("Unable to load texture from %s!\nSomething is wrong with the pakfile.", file);
 
 	SDL_RWops *rw;
-	rw = SDL_RWFromFP(fin, 1);
+	rw = SDL_RWFromFP(fin, SDL_TRUE);
 	img = IMG_LoadTyped_RW(rw,0, img_type);
 	if(img == NULL)
 		error_msg("Unable to load texture from %s!\n%s", file, IMG_GetError());

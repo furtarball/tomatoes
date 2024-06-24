@@ -185,7 +185,7 @@ void load_sound(char *file) {
 		// The file doesn't exist in the override directory
 		// try to load it from the pakfile.
 		FILE *fp = pakfile.open_file(file);
-		SDL_RWops *rw = SDL_RWFromFP(fp,0); 
+		SDL_RWops *rw = SDL_RWFromFP(fp,SDL_FALSE); 
 		sounds[cur_sound] = Mix_LoadWAV_RW(rw,0);
 		SDL_FreeRW(rw);
 		fclose(fp);
