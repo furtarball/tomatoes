@@ -29,7 +29,7 @@
 
 #include <stdio.h>
 #include <SDL2/SDL.h>
-#include "SDL_opengl.h"
+#include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_image.h>
 #include "mymath.h"
 #include "tilemap.h"

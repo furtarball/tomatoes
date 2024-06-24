@@ -31,7 +31,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <SDL2/SDL.h>
-#include "SDL_opengl.h"
+#include <SDL2/SDL_opengl.h>
 #include "init.h"
 #include "font.h"
 #include "comments.h"

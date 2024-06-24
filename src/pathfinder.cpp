@@ -29,7 +29,7 @@
 
 #include <stdlib.h>
 #include <SDL2/SDL.h>
-#include "SDL_opengl.h"
+#include <SDL2/SDL_opengl.h>
 #include "pathfinder.h"
 #include "tilemap.h"
 

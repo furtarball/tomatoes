@@ -31,7 +31,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <SDL2/SDL.h>
-#include "SDL_opengl.h"
+#include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_image.h>
 #include "game.h"
 #include "texture.h"

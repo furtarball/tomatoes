@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include <vector>
 #include <SDL2/SDL.h>
-#include "SDL_opengl.h"
+#include <SDL2/SDL_opengl.h>
 #include "mpak.h"
 #include "levels.h"
 #include "enemy.h"

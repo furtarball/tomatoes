@@ -36,7 +36,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #endif
-#include "SDL_opengl.h"
+#include <SDL2/SDL_opengl.h>
 
 
 #include "config.h"
