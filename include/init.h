@@ -45,6 +45,10 @@ extern CONFIG config;
 struct MPAK_FILE;
 extern MPAK_FILE pakfile;
 
+// Keep a global pointer to the controllers
+struct _SDL_GameController;
+typedef struct _SDL_GameController SDL_GameController;
+extern SDL_GameController *pads[2];
 
 // Initialize SDL and OpenGL
 void init_sdl_and_gl();

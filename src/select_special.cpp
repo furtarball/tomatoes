@@ -243,8 +243,8 @@ void do_special_selection() {
 		if(i != f && icon_menu.anim[f] > 0.0f)
 			icon_menu.anim[f] -= 0.1f;
 
-	// Handle the keyboard input
-	if(key[config.key_left[who]]) {
+	// Handle the keyboard and controller input
+	if(pressed(config.key_left[who], who)) {
 		if(icon_menu.lkey_down == false) {
 			icon_menu.lkey_down = true;
 			icon_menu.selected--;
@@ -260,7 +260,7 @@ void do_special_selection() {
 	else
 		icon_menu.lkey_down = false;
 
-	if(key[config.key_right[who]]) {
+	if(pressed(config.key_right[who], who)) {
 		if(icon_menu.rkey_down == false) {
 			icon_menu.rkey_down = true;
 			icon_menu.selected++;
@@ -278,7 +278,7 @@ void do_special_selection() {
 
 
 	// Invoke a special power
-	if((key[config.key_shoot[who]] || key[SDLK_RETURN]) && icon_menu.wait == 0) {
+	if((pressed(config.key_shoot[who], who) || key[SDLK_RETURN] || btn[0][SDL_CONTROLLER_BUTTON_A] || btn[1][SDL_CONTROLLER_BUTTON_A]) && icon_menu.wait == 0) {
 		int power = icon_menu.selected;
 
 		bool disabled = (icon_menu.count[power] == 0 || (icon_menu.is_on_block && (power == RED_POWER_TRAP || power == GREEN_POWER_FLOWERPOWER)));
@@ -324,7 +324,7 @@ void do_special_selection() {
 
 
 	// Cancel the menu
-	if(key[config.key_special[who]] && icon_menu.wait == 0) {
+	if(pressed(config.key_special[who], who) && icon_menu.wait == 0) {
 		icon_menu.visible = false;
 		icon_menu.wait = 15;
 

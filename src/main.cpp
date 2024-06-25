@@ -164,6 +164,11 @@ int main(int argc, char *argv[]) {
 	kill_particles();
         SDL_DestroyWindow(window);
         SDL_GL_DeleteContext(glctx);
+        
+        // Free controllers
+        for(int i = 0; i < 2, pads[i] != NULL; ++i) {
+	        SDL_GameControllerClose(pads[i]);
+	}
 
 	// Kill SDL
 	SDL_Quit();

@@ -124,6 +124,7 @@ void HISCORE_LIST::input_name(int place) {
 	bx_roll_dir = RANDF(-0.001f,0.001f);
 	by_roll_dir = RANDF(-0.001f,0.001f);
 	key.clear();
+	memset(btn, 0, sizeof(btn));
 
 	// Fade in
 	fading = 1;
@@ -162,7 +163,7 @@ void HISCORE_LIST::input_name(int place) {
 			}
 
 			// Take a screenshot?
-			if(key[SDLK_F12])
+			if(key[SDLK_F12] || btn[0][SDL_CONTROLLER_BUTTON_LEFTSHOULDER] || btn[1][SDL_CONTROLLER_BUTTON_LEFTSHOULDER])
 				save_screenshot();
 
 			// Blink
@@ -265,7 +266,7 @@ void HISCORE_LIST::input_name(int place) {
 					pos = 0;
 				str[pos] = '\0';
 			}
-			else if(key[SDLK_RETURN] && pos > 0 && str[0] != ' ') {
+			else if((key[SDLK_RETURN] || btn[0][SDL_CONTROLLER_BUTTON_A] || btn[1][SDL_CONTROLLER_BUTTON_A]) && pos > 0 && str[0] != ' ') {
 				fading = 2;
 				typed = false;
 			}
@@ -275,6 +276,7 @@ void HISCORE_LIST::input_name(int place) {
 
 			// Clear the key array
 			key.clear();
+			memset(btn, 0, sizeof(btn));
 
 			// Animate the background
 			back_anim = add_angle(back_anim, 2.0f);

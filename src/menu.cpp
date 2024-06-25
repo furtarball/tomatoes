@@ -125,6 +125,20 @@ char *key_name(int key) {
 								// a key.
 }
 
+// Helper function which returns a button name in upper case
+const char *btn_name(int btn) {
+        static const char* const names[] = {
+                "A", "B", "X", "Y", "SELECT/BACK", "GUIDE/HOME", "START", "LEFT STICK", "RIGHT STICK",
+                "LEFT SHOULDER", "RIGHT SHOULDER", "UP", "DOWN", "LEFT", "RIGHT"
+        };
+        if(btn == -1)
+                return "PRESS A BUTTON";	// This is displayed when we're setting
+								// a button.
+	else if((btn >= 0) && (btn <= 14))
+                return names[btn];
+	else
+		return "";
+}
 
 // Helper function which draws the credits
 void draw_credits(float fade) {
@@ -367,9 +381,9 @@ void draw_menu(int menu_id, int menu_item, int place, float fade, HISCORE_LIST *
 		else
 			glColor3fv(col_normal2);
 		if(config.moving_style[who] == 1)
-			glprintf(font1, 0, -5.0f, 2.0f, -13, "Move forward:        %s", key_name(config.key_up[who]));
+			glprintf(font1, 0, -5.0f, 2.0f, -13, "Move forward:        %s", (config.ctl_type[who] == KEYBOARD) ? (key_name(config.key_up[who])) : (btn_name(config.key_up[who])));
 		else
-			glprintf(font1, 0, -5.0f, 2.0f, -13, "Move up:             %s", key_name(config.key_up[who]));
+			glprintf(font1, 0, -5.0f, 2.0f, -13, "Move up:             %s", (config.ctl_type[who] == KEYBOARD) ? (key_name(config.key_up[who])) : (btn_name(config.key_up[who])));
 
 		// Key down
 		if(menu_item == MENU_KEYDOWN)
@@ -377,9 +391,9 @@ void draw_menu(int menu_id, int menu_item, int place, float fade, HISCORE_LIST *
 		else
 			glColor3fv(col_normal2);
 		if(config.moving_style[who] == 1)
-			glprintf(font1, 0, -5.0f, 1.5f, -13, "Turn around:         %s", key_name(config.key_down[who]));
+			glprintf(font1, 0, -5.0f, 1.5f, -13, "Turn around:         %s", (config.ctl_type[who] == KEYBOARD) ? (key_name(config.key_down[who])) : (btn_name(config.key_down[who])));
 		else
-			glprintf(font1, 0, -5.0f, 1.5f, -13, "Move down:           %s", key_name(config.key_down[who]));
+			glprintf(font1, 0, -5.0f, 1.5f, -13, "Move down:           %s", (config.ctl_type[who] == KEYBOARD) ? (key_name(config.key_down[who])) : (btn_name(config.key_down[who])));
 
 		// Key left
 		if(menu_item == MENU_KEYLEFT)
@@ -387,9 +401,9 @@ void draw_menu(int menu_id, int menu_item, int place, float fade, HISCORE_LIST *
 		else
 			glColor3fv(col_normal2);
 		if(config.moving_style[who] == 1)
-			glprintf(font1, 0, -5.0f, 1.0f, -13, "Turn left:           %s", key_name(config.key_left[who]));
+			glprintf(font1, 0, -5.0f, 1.0f, -13, "Turn left:           %s", (config.ctl_type[who] == KEYBOARD) ? (key_name(config.key_left[who])) : (btn_name(config.key_left[who])));
 		else
-			glprintf(font1, 0, -5.0f, 1.0f, -13, "Move left:           %s", key_name(config.key_left[who]));
+			glprintf(font1, 0, -5.0f, 1.0f, -13, "Move left:           %s", (config.ctl_type[who] == KEYBOARD) ? (key_name(config.key_left[who])) : (btn_name(config.key_left[who])));
 
 		// Key right
 		if(menu_item == MENU_KEYRIGHT)
@@ -397,23 +411,23 @@ void draw_menu(int menu_id, int menu_item, int place, float fade, HISCORE_LIST *
 		else
 			glColor3fv(col_normal2);
 		if(config.moving_style[who] == 1)
-			glprintf(font1, 0, -5.0f, 0.5f, -13, "Turn right:          %s", key_name(config.key_right[who]));
+			glprintf(font1, 0, -5.0f, 0.5f, -13, "Turn right:          %s", (config.ctl_type[who] == KEYBOARD) ? (key_name(config.key_right[who])) : (btn_name(config.key_right[who])));
 		else
-			glprintf(font1, 0, -5.0f, 0.5f, -13, "Move right:          %s", key_name(config.key_right[who]));
+			glprintf(font1, 0, -5.0f, 0.5f, -13, "Move right:          %s", (config.ctl_type[who] == KEYBOARD) ? (key_name(config.key_right[who])) : (btn_name(config.key_right[who])));
 
 		// Key bomb
 		if(menu_item == MENU_KEYBOMB)
 			glColor3fv(col_selected2);
 		else
 			glColor3fv(col_normal2);
-		glprintf(font1, 0, -5.0f, 0.0f, -13, "Throw a bomb:        %s", key_name(config.key_shoot[who]));
+		glprintf(font1, 0, -5.0f, 0.0f, -13, "Throw a bomb:        %s", (config.ctl_type[who] == KEYBOARD) ? (key_name(config.key_shoot[who])) : (btn_name(config.key_shoot[who])));
 
 		// Key special
 		if(menu_item == MENU_KEYSPECIAL)
 			glColor3fv(col_selected2);
 		else
 			glColor3fv(col_normal2);
-		glprintf(font1, 0, -5.0f, -0.5f, -13, "Use a special:       %s", key_name(config.key_special[who]));
+		glprintf(font1, 0, -5.0f, -0.5f, -13, "Use a special:       %s", (config.ctl_type[who] == KEYBOARD) ? (key_name(config.key_special[who])) : (btn_name(config.key_special[who])));
 
 		// Sound volume slider
 		if(menu_item == MENU_SOUNDVOL)
@@ -550,6 +564,7 @@ int show_menu(int menu_id) {
 	mid_state = 1;
 	mid_state_wait = 3 * 60;
 	key.clear();
+	memset(btn, 0, sizeof(btn));
 	setting_key = false;
 	key_to_set = NULL;
 	whose_keys = 0;
@@ -582,6 +597,7 @@ int show_menu(int menu_id) {
 						key[event.key.keysym.sym] = 1;
 					// Set the key if it's not ESC, F12, F1
 					else if(setting_key == true && event.key.keysym.sym != SDLK_ESCAPE && event.key.keysym.sym != SDLK_F12 && event.key.keysym.sym != SDLK_F1) {
+					        config.ctl_type[whose_keys] = KEYBOARD;
 						(*key_to_set) = event.key.keysym.sym;
 						setting_key = false;
 					}
@@ -596,6 +612,28 @@ int show_menu(int menu_id) {
 					// Update the 'key' array
 					key[event.key.keysym.sym] = 0;
 					break;
+					
+		                case SDL_CONTROLLERBUTTONDOWN:
+		                        // Update the 'btn' array
+					if(setting_key == false)
+						btn[event.cbutton.which][event.cbutton.button] = 1;
+					// Set the button if it's not START, LEFTSHOULDER, RIGHTSHOULDER
+					else if(setting_key == true && event.cbutton.button != SDL_CONTROLLER_BUTTON_START && event.cbutton.button != SDL_CONTROLLER_BUTTON_LEFTSHOULDER && event.cbutton.button != SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) {
+					        config.ctl_type[whose_keys] = CONTROLLER;
+						(*key_to_set) = event.cbutton.button;
+						setting_key = false;
+					}
+					// START pressed -> cancel the key setting
+					else if(setting_key == true && event.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
+						(*key_to_set) = prev_key;
+						setting_key = false;
+					}
+					break;
+		                
+		                case SDL_CONTROLLERBUTTONUP:
+		                        // Update the 'btn' array
+			                btn[event.cbutton.which][event.cbutton.button] = 0;
+			                break;
 			}
 		}
 
@@ -622,11 +660,11 @@ int show_menu(int menu_id) {
 			}
 
 			// Take a screenshot?
-			if(key[SDLK_F12])
+			if(key[SDLK_F12] || btn[0][SDL_CONTROLLER_BUTTON_LEFTSHOULDER] || btn[1][SDL_CONTROLLER_BUTTON_LEFTSHOULDER])
 				save_screenshot();
 
 			// Handle the cursor movement
-			if(key[SDLK_UP] || (key[SDLK_LEFT] && menu_item != MENU_MUSICVOL && menu_item != MENU_SOUNDVOL)) {
+			if((key[SDLK_UP] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_UP] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_UP]) || ((key[SDLK_LEFT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_LEFT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_LEFT]) && menu_item != MENU_MUSICVOL && menu_item != MENU_SOUNDVOL)) {
 				play_sound(SND_MENU1, false);
 				menu_item--;
 				if(menu_id == MENU_ID_MAIN) {
@@ -643,7 +681,7 @@ int show_menu(int menu_id) {
 				}
 			}
 
-			if(key[SDLK_DOWN] || (key[SDLK_RIGHT] && menu_item != MENU_MUSICVOL && menu_item != MENU_SOUNDVOL)) {
+			if((key[SDLK_DOWN] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_DOWN] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_DOWN]) || ((key[SDLK_RIGHT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_DOWN] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_DOWN]) && menu_item != MENU_MUSICVOL && menu_item != MENU_SOUNDVOL)) {
 				play_sound(SND_MENU1, false);
 				menu_item++;
 				if(menu_id == MENU_ID_MAIN) {
@@ -660,8 +698,8 @@ int show_menu(int menu_id) {
 				}
 			}
 
-			// Handle the ESC pressings
-			if(key[SDLK_ESCAPE]) {
+			// Handle the ESC/B pressings
+			if(key[SDLK_ESCAPE] || btn[0][SDL_CONTROLLER_BUTTON_B] || btn[1][SDL_CONTROLLER_BUTTON_B]) {
 				play_sound(SND_MENU2, false);
 				// In the main menu -> exit, otherwise return to the main menu
 				if(menu_id == MENU_ID_MAIN) {
@@ -689,7 +727,7 @@ int show_menu(int menu_id) {
 			}
 
 			// Handle the item selection
-			if(key[SDLK_RETURN] || key[SDLK_SPACE]) {
+			if(key[SDLK_RETURN] || key[SDLK_SPACE] || btn[0][SDL_CONTROLLER_BUTTON_A] || btn[1][SDL_CONTROLLER_BUTTON_A]) {
 				play_sound(SND_MENU2, false);
 				switch(menu_item) {
 					// MAIN MENU items
@@ -805,14 +843,14 @@ int show_menu(int menu_id) {
 
 			// Check the volume level sliders
 			if(menu_item == MENU_MUSICVOL) {
-				if(key[SDLK_LEFT]) {
+				if(key[SDLK_LEFT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_LEFT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_LEFT]) {
 					config.music_vol -= 10;
 					if(config.music_vol < 0)
 						config.music_vol = 0;
 					// Update the volume levels
 					Mix_VolumeMusic(config.music_vol);
 				}
-				if(key[SDLK_RIGHT]) {
+				if(key[SDLK_RIGHT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_RIGHT]) {
 					config.music_vol += 10;
 					if(config.music_vol > 255)
 						config.music_vol = 255;
@@ -821,7 +859,7 @@ int show_menu(int menu_id) {
 				}
 			}
 			if(menu_item == MENU_SOUNDVOL) {
-				if(key[SDLK_LEFT]) {
+				if(key[SDLK_LEFT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_LEFT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_LEFT]) {
 					config.sound_vol -= 10;
 					if(config.sound_vol < 0)
 						config.sound_vol = 0;
@@ -829,7 +867,7 @@ int show_menu(int menu_id) {
 					Mix_Volume(-1,config.sound_vol);
 					play_sound(SND_MENU1, false);
 				}
-				if(key[SDLK_RIGHT]) {
+				if(key[SDLK_RIGHT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_RIGHT]) {
 					config.sound_vol += 10;
 					if(config.sound_vol > 255)
 						config.sound_vol = 255;
@@ -842,6 +880,7 @@ int show_menu(int menu_id) {
 
 			// Clear the key array
 			key.clear();
+			memset(btn, 0, sizeof(btn));
 
 			// Animate the background
 			back_anim = add_angle(back_anim, 2.0f);

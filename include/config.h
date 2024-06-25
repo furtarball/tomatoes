@@ -30,6 +30,10 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+// Control types for ctl_type
+#define KEYBOARD    0
+#define CONTROLLER  1
+
 // Config structure
 struct CONFIG {
 	int vid_w;				// Video mode width
@@ -52,6 +56,7 @@ struct CONFIG {
 
 	int perspective_mode;	// Perspective mode enabled (1) or disabled (0)
 	int moving_style[2];	// Moving style (1 == relative, 2 == absolute)
+        int ctl_type[2];                // Keyboard or controller?
 };
 
 

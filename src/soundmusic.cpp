@@ -146,22 +146,22 @@ void search_music() {
 
 // If the current music has finished, start playing another
 void music_finished() {
-	static bool f1_key_down = false;
+	static bool skip_down = false;
 
 	if(!config.sound || !num_music_files || !config.music_vol)
 		return;
 	
-	if(f1_key_down == false) {
+	if(skip_down == false) {
 		// Play the current song from the playlist
 		play_music(music_files[cur_music]);
 
 		cur_music++;
 		if(cur_music > num_music_files-1)
 			shuffle_playlist();
-		f1_key_down = true;
+		skip_down = true;
 	}
-	if(!key[SDLK_F1])
-		f1_key_down = false;
+	if((!key[SDLK_F1]) && (btn[0][SDL_CONTROLLER_BUTTON_DPAD_RIGHT]) && (btn[1][SDL_CONTROLLER_BUTTON_DPAD_RIGHT]))
+		skip_down = false;
 
 }
 

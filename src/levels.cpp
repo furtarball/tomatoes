@@ -206,7 +206,7 @@ void init_levels() {
 
 
 	// Add the comment
-	add_comment(COL_DEFAULT, "Press ENTER to begin level %s.", level_names[cur_level]);
+	add_comment(COL_DEFAULT, "Press ENTER or A to begin level %s.", level_names[cur_level]);
 
 	// Clear the helpers
 	wisp.clear();
@@ -375,7 +375,7 @@ void next_level() {
 	}
 
 	// Add the comment
-	add_comment(COL_DEFAULT, "Press ENTER to begin level %s.", level_names[cur_level]);
+	add_comment(COL_DEFAULT, "Press ENTER or A to begin level %s.", level_names[cur_level]);
 	level_pause = LEVEL_PAUSE_BEGIN;
 
 	start_level_timing();

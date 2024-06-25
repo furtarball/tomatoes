@@ -29,10 +29,15 @@
 
 #ifndef GAME_H
 #define GAME_H
+
 #include <map>
 
-// Array containing currently pressed keys
+// Function that returns state of pressed key/button for given player
+Uint8 pressed(int key_or_btn, int which_player);
+
+// Arrays containing currently pressed keys and buttons
 extern std::map<SDL_Keycode, Uint8> key;
+extern Uint8 btn[2][SDL_CONTROLLER_BUTTON_MAX];
 
 // Kill count
 extern int kill_count;

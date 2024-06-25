@@ -56,7 +56,8 @@ CONFIG config;
 // Keep a global pointer to the data file
 MPAK_FILE pakfile;
 
-
+// Keep a global pointer to the controllers
+SDL_GameController *pads[2] = {NULL, NULL};
 
 // Display an error message and quit
 void error_msg(const char *msg, ...) {
@@ -95,7 +96,7 @@ void init_sdl_and_gl() {
 		error_msg("Sorry, 8-bit color depth is not supported!\nYou must use 15, 16, 24 or 32-bit mode.\n");
 
 	// Initialize SDL with video and timer support
-	if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER|SDL_INIT_AUDIO) < 0)
+	if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER|SDL_INIT_AUDIO|SDL_INIT_GAMECONTROLLER) < 0)
 		error_msg("Unable to init SDL: %s", SDL_GetError());
 
 	// Hide the mouse cursor
@@ -120,6 +121,15 @@ void init_sdl_and_gl() {
 
 	// Initialize math tables
 	init_math();
+	
+	// Initialize controllers
+	for(int i = 0; i < SDL_NumJoysticks(), i < 2; ++i) {
+	        if(SDL_IsGameController(i)) {
+	                pads[i] = SDL_GameControllerOpen(i);
+	                if(!pads[i])
+	                        error_msg("Unable to initialize game controller %i!\n%s", i, SDL_GetError());
+                }
+	}
 
 	// Set the video mode
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);

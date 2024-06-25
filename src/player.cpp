@@ -467,7 +467,7 @@ void PLAYER::move() {
 	}
 
 
-	if(!walking && ((config.moving_style[who2] == MOV_RELATIVE && !key[config.key_up[who2]]) || (config.moving_style[who2] == MOV_ABSOLUTE && !key[config.key_up[who2]] && !key[config.key_down[who2]] && !key[config.key_left[who2]] && !key[config.key_right[who2]])))
+	if(!walking && ((config.moving_style[who2] == MOV_RELATIVE && !pressed(config.key_up[who2], who2)) || (config.moving_style[who2] == MOV_ABSOLUTE && !pressed(config.key_up[who2], who2) && !pressed(config.key_down[who2], who2) && !pressed(config.key_left[who2], who2) && !pressed(config.key_right[who2], who2))))
 		anim = 0.0f;
 
 	// Check if we're on a block
@@ -481,7 +481,7 @@ void PLAYER::move() {
 
 
 	// Check for turning input
-	if(key[config.key_left[who2]]) {
+	if(pressed(config.key_left[who2], who2)) {
 		if(config.moving_style[who2] == MOV_RELATIVE) {
 			// Relative moving
 			if(!turn_key_down[0] && !turning) {
@@ -529,7 +529,7 @@ void PLAYER::move() {
 	else
 		turn_key_down[0] = false;
 
-	if(key[config.key_right[who2]]) {
+	if(pressed(config.key_right[who2], who2)) {
 		if(config.moving_style[who2] == MOV_RELATIVE) {
 			// Relative moving
 			if(!turn_key_down[1] && !turning) {
@@ -578,10 +578,10 @@ void PLAYER::move() {
 		turn_key_down[1] = false;
 
 	// Check for 180 degree turning
-	if(key[config.key_down[who2]]) {
+	if(pressed(config.key_down[who2], who2)) {
 		if(config.moving_style[who2] == MOV_RELATIVE) {
 			// Relative moving
-			if(!turn_key_down[2] && !turning && !walking && !key[config.key_up[who2]]) {
+			if(!turn_key_down[2] && !turning && !walking && !pressed(config.key_up[who2], who2)) {
 				nextdir = dir + 1;
 				if(nextdir > DIR_W)
 					nextdir = DIR_N;
@@ -629,7 +629,7 @@ void PLAYER::move() {
 		return;
 
 	// Check for walking input
-	if(key[config.key_up[who2]] && !walking && !turning) {
+	if(pressed(config.key_up[who2], who2) && !walking && !turning) {
 		if(config.moving_style[who2] == MOV_RELATIVE) {
 			// Relative moving
 			walking = true;
@@ -717,7 +717,7 @@ void PLAYER::move() {
 		reload--;
 
 	// Dropping bombs
-	if(key[config.key_shoot[who2]] && reload == 0 && num_bombs < 3 && !on_block && !icon_menu.wait) {
+	if(pressed(config.key_shoot[who2], who2) && reload == 0 && num_bombs < 3 && !on_block && !icon_menu.wait) {
 		reload = 30;
 
 		// Plant the bomb
@@ -730,7 +730,7 @@ void PLAYER::move() {
 
 
 	// Invoke the special powers
-	if(key[config.key_special[who2]]) {
+	if(pressed(config.key_special[who2], who2)) {
 		open_icon_menu(who, on_block);
 		show_icon(0);
 		show_icon(1);
@@ -759,6 +759,11 @@ void PLAYER::die() {
 		sound = RAND(SND_DIE1, SND_DIE6);
 	play_sound(sound, false);
 	last_sound = sound;
+	
+	// Rumble the controller a bit
+	int who = (this == &p1) ? 0 : 1;
+	if(config.ctl_type[who] == CONTROLLER)
+        	SDL_GameControllerRumble(pads[who], 0xff00, 0x0000, 500);
 
 	// Reduce the special powers
 	for(int f=0; f<NUM_ICONS; f++) {

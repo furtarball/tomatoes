@@ -122,6 +122,7 @@ void load_config(char *file, CONFIG *conf) {
 	fscanf(f, "key_special = %d %d\n", &(conf->key_special[0]), &(conf->key_special[1]));
 	fscanf(f, "perspective = %d\n", &(conf->perspective_mode));
 	fscanf(f, "moving_style = %d %d\n", &(conf->moving_style[0]), &(conf->moving_style[1]));
+	fscanf(f, "ctl_type = %d %d\n", &(conf->ctl_type[0]), &(conf->ctl_type[1]));
 	fclose(f);
 }
 
@@ -149,6 +150,7 @@ void save_config(char *file, CONFIG *conf) {
 	fprintf(f, "key_special = %d %d\n", (conf->key_special[0]), (conf->key_special[1]));
 	fprintf(f, "perspective = %d\n", (conf->perspective_mode));
 	fprintf(f, "moving_style = %d %d\n", (conf->moving_style[0]), (conf->moving_style[1]));
+	fprintf(f, "ctl_type = %d %d\n", (conf->ctl_type[0]), (conf->ctl_type[1]));
 	fclose(f);
 }
 

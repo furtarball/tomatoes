@@ -59,7 +59,6 @@
 #include "select_special.h"
 #include "hiscore.h"
 
-
 // Background texture list
 int bgrounds[NUM_BGROUNDS];
 GLuint cur_bground;
@@ -79,8 +78,17 @@ static float light_position1[] = { MAP_W*0.5f, 6.0f, MAP_H*0.75f, 1.0f };
 static float light_position2[] = { -MAP_W*0.5f, 2.0f, MAP_H*0.25f, 1.0f };
 
 
-// Array containing currently pressed keys
+// Arrays containing currently pressed keys and buttons
 std::map<SDL_Keycode, Uint8> key;
+Uint8 btn[2][SDL_CONTROLLER_BUTTON_MAX] = {0};
+
+// Function that returns state of pressed key/button for given player
+Uint8 pressed(int key_or_btn, int which_player) {
+        if(config.ctl_type[which_player] == KEYBOARD)
+                return key[key_or_btn];
+        else
+                return btn[which_player][key_or_btn];
+}
 
 // Kill count
 int kill_count;
@@ -93,8 +101,8 @@ bool two_players;
 extern int killed_5_diamonds;
 
 
-// Confirm the ESC press
-static bool confirm_esc;
+// Confirm the ESC or START press
+static bool confirm_exit;
 
 
 // Current fps
@@ -246,7 +254,7 @@ void draw() {
 	draw_special_selection();
 
 	// Draw the ESC confirmation
-	if(confirm_esc) {
+	if(confirm_exit) {
 		glLoadIdentity();
 		BIND_TEXTURE(0);
 		glColor4f(0,0,0, 0.45f);
@@ -260,7 +268,7 @@ void draw() {
 		glColor3f(1,1,1);
 		set_font_scale(0.4f, 0.6f);
 		glprintf_center(font1, 0, 0, 2.0f, -13, "ARE YOU SURE YOU WANT TO EXIT?");
-		glprintf_center(font1, 0, 0, 1.1f, -13, "Press ESC to exit, or ENTER to resume.");
+		glprintf_center(font1, 0, 0, 1.1f, -13, "Press ESC/START to exit, or ENTER/A to resume.");
 		set_font_scale(1,1);
 	}
 
@@ -303,6 +311,16 @@ bool handle_event(SDL_Event &event) {
 			// Update the 'key' array
 			key[event.key.keysym.sym] = 0;
 			return false;
+		
+		case SDL_CONTROLLERBUTTONDOWN:
+		        // Update the 'btn' array
+			btn[event.cbutton.which][event.cbutton.button] = 1;
+			return false;
+		
+		case SDL_CONTROLLERBUTTONUP:
+		        // Update the 'btn' array
+			btn[event.cbutton.which][event.cbutton.button] = 0;
+			return false;
 	}
 
 	return false;
@@ -313,6 +331,7 @@ bool handle_event(SDL_Event &event) {
 void start_game(bool two_pls) {
 	// Initialize
 	key.clear();
+	memset(btn, 0, sizeof(btn));
 	clear_comments();
 	clear_map();
 	clear_enemies();
@@ -338,7 +357,7 @@ void start_game(bool two_pls) {
 
 	// Set up the main loop
 	game_paused = false;
-	confirm_esc = false;
+	confirm_exit = false;
 	timer_count = 0;
 	Uint32 fps_counter = 0;
 	int frames_drawn = 0;
@@ -346,9 +365,9 @@ void start_game(bool two_pls) {
 	prev_ticks = SDL_GetTicks();
 	Uint32 confirm_time = 0;
 	bool main_loop_done = false;
-	bool f12_down = false;
-	bool key_return_down = false;
-	bool key_esc_down = false;
+	bool scrshot_down = false;
+	bool unpause_down = false;
+	bool exit_down = false;
 	bool finished = false;
 
 
@@ -385,11 +404,11 @@ void start_game(bool two_pls) {
 
 			// Check keypresses
 			// ESC press
-			if(key[SDLK_ESCAPE] && !fading) {
-				if(key_esc_down == false) {
-					key_esc_down = true;
-					if(!confirm_esc) {
-						confirm_esc = true;
+			if((key[SDLK_ESCAPE] || btn[0][SDL_CONTROLLER_BUTTON_START] || btn[1][SDL_CONTROLLER_BUTTON_START]) && !fading) {
+				if(exit_down == false) {
+					exit_down = true;
+					if(!confirm_exit) {
+						confirm_exit = true;
 						// Keep track of the time, so we can restore it
 						confirm_time = SDL_GetTicks();
 					}
@@ -401,43 +420,43 @@ void start_game(bool two_pls) {
 				}
 			}
 			else
-				key_esc_down = false;
+				exit_down = false;
 
 			// ENTER press
-			if(confirm_esc) {
-				if(key[SDLK_RETURN]) {
-					if(key_return_down == false) {
-						key_return_down = true;
-						confirm_esc = false;
+			if(confirm_exit) {
+				if(key[SDLK_RETURN] || btn[0][SDL_CONTROLLER_BUTTON_A] || btn[1][SDL_CONTROLLER_BUTTON_A]) {
+					if(unpause_down == false) {
+						unpause_down = true;
+						confirm_exit = false;
 						if(!killed_5_diamonds)
 							level_time += (SDL_GetTicks() - confirm_time);
 					}
 				}
 				else
-					key_return_down = false;
+					unpause_down = false;
 			}
 
 
 			// Screenshot?
-			if(key[SDLK_F12]) {
-				if(f12_down == false) {
-					f12_down = true;
+			if(key[SDLK_F12] || btn[0][SDL_CONTROLLER_BUTTON_LEFTSHOULDER] || btn[1][SDL_CONTROLLER_BUTTON_LEFTSHOULDER]) {
+				if(scrshot_down == false) {
+					scrshot_down = true;
 					save_screenshot();
 				}
 			}
 			else
-				f12_down = false;
+				scrshot_down = false;
 
-			if(!confirm_esc) {
+			if(!confirm_exit) {
 
 				// Handle the level pause
 				if(level_pause == LEVEL_PAUSE_BEGIN) {
-					if(key[SDLK_RETURN] || key[config.key_shoot[0]] || key[config.key_shoot[1]]) {
-						if(!key_return_down) {
+					if(key[SDLK_RETURN] || btn[0][SDL_CONTROLLER_BUTTON_A] || btn[1][SDL_CONTROLLER_BUTTON_A] || pressed(config.key_shoot[0], 0) || pressed(config.key_shoot[1], 1)) {
+						if(!unpause_down) {
 							// Start timing the level change
 							start_level_timing();
 							level_pause = 0;
-							key_return_down = true;
+							unpause_down = true;
 
 							// A little hack to prevent players firing their bombs accidentally,
 							// if they press their Shoot button to start the level.
@@ -446,7 +465,7 @@ void start_game(bool two_pls) {
 						}
 					}
 					else
-						key_return_down = false;
+						unpause_down = false;
 				}
 
 				// Do the game stuff
