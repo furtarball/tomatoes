@@ -662,6 +662,10 @@ int show_menu(int menu_id) {
 			// Take a screenshot?
 			if(key[SDLK_F12] || btn[0][SDL_CONTROLLER_BUTTON_LEFTSHOULDER] || btn[1][SDL_CONTROLLER_BUTTON_LEFTSHOULDER])
 				save_screenshot();
+			
+			// Skip currently playing track
+			if(key[SDLK_F1] || btn[0][SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] || btn[1][SDL_CONTROLLER_BUTTON_RIGHTSHOULDER])
+				Mix_HaltMusic();
 
 			// Handle the cursor movement
 			if((key[SDLK_UP] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_UP] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_UP]) || ((key[SDLK_LEFT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_LEFT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_LEFT]) && menu_item != MENU_MUSICVOL && menu_item != MENU_SOUNDVOL)) {

@@ -143,8 +143,7 @@ void search_music() {
 	shuffle_playlist();
 }
 
-
-// If the current music has finished, start playing another
+// If the current music has finished (or has been skipped), start playing another
 void music_finished() {
 	if(!config.sound || !num_music_files || !config.music_vol)
 		return;

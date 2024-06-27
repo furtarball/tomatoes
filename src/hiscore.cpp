@@ -165,6 +165,10 @@ void HISCORE_LIST::input_name(int place) {
 			// Take a screenshot?
 			if(key[SDLK_F12] || btn[0][SDL_CONTROLLER_BUTTON_LEFTSHOULDER] || btn[1][SDL_CONTROLLER_BUTTON_LEFTSHOULDER])
 				save_screenshot();
+			
+			// Skip currently playing track
+			if(key[SDLK_F1] || btn[0][SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] || btn[1][SDL_CONTROLLER_BUTTON_RIGHTSHOULDER])
+				Mix_HaltMusic();
 
 			// Blink
 			cursor_blink++;

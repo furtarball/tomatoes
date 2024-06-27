@@ -366,6 +366,7 @@ void start_game(bool two_pls) {
 	Uint32 confirm_time = 0;
 	bool main_loop_done = false;
 	bool scrshot_down = false;
+	bool skip_down = false;
 	bool unpause_down = false;
 	bool exit_down = false;
 	bool finished = false;
@@ -446,6 +447,16 @@ void start_game(bool two_pls) {
 			}
 			else
 				scrshot_down = false;
+			
+			// Skip currently playing track
+			if(key[SDLK_F1] || btn[0][SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] || btn[1][SDL_CONTROLLER_BUTTON_RIGHTSHOULDER]) {
+				if(skip_down == false) {
+					skip_down = true;
+					Mix_HaltMusic();
+				}
+			}
+			else
+				skip_down = false;
 
 			if(!confirm_exit) {
 
