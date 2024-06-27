@@ -665,7 +665,7 @@ int show_menu(int menu_id) {
 
 			// Handle the cursor movement
 			if((key[SDLK_UP] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_UP] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_UP]) || ((key[SDLK_LEFT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_LEFT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_LEFT]) && menu_item != MENU_MUSICVOL && menu_item != MENU_SOUNDVOL)) {
-				play_sound(SND_MENU1, false);
+				play_sound(SND_MENU1);
 				menu_item--;
 				if(menu_id == MENU_ID_MAIN) {
 					if(menu_item < MENU_START)
@@ -682,7 +682,7 @@ int show_menu(int menu_id) {
 			}
 
 			if((key[SDLK_DOWN] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_DOWN] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_DOWN]) || ((key[SDLK_RIGHT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_RIGHT]) && menu_item != MENU_MUSICVOL && menu_item != MENU_SOUNDVOL)) {
-				play_sound(SND_MENU1, false);
+				play_sound(SND_MENU1);
 				menu_item++;
 				if(menu_id == MENU_ID_MAIN) {
 					if(menu_item > MENU_EXIT)
@@ -700,7 +700,7 @@ int show_menu(int menu_id) {
 
 			// Handle the ESC/B pressings
 			if(key[SDLK_ESCAPE] || btn[0][SDL_CONTROLLER_BUTTON_B] || btn[1][SDL_CONTROLLER_BUTTON_B]) {
-				play_sound(SND_MENU2, false);
+				play_sound(SND_MENU2);
 				// In the main menu -> exit, otherwise return to the main menu
 				if(menu_id == MENU_ID_MAIN) {
 					action = MENU_EXIT;
@@ -728,7 +728,7 @@ int show_menu(int menu_id) {
 
 			// Handle the item selection
 			if(key[SDLK_RETURN] || key[SDLK_SPACE] || btn[0][SDL_CONTROLLER_BUTTON_A] || btn[1][SDL_CONTROLLER_BUTTON_A]) {
-				play_sound(SND_MENU2, false);
+				play_sound(SND_MENU2);
 				switch(menu_item) {
 					// MAIN MENU items
 					case MENU_START:			// Start menu
@@ -865,7 +865,7 @@ int show_menu(int menu_id) {
 						config.sound_vol = 0;
 					// Update the volume levels
 					Mix_Volume(-1,config.sound_vol);
-					play_sound(SND_MENU1, false);
+					play_sound(SND_MENU1);
 				}
 				if(key[SDLK_RIGHT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_RIGHT]) {
 					config.sound_vol += 10;
@@ -873,7 +873,7 @@ int show_menu(int menu_id) {
 						config.sound_vol = 255;
 					// Update the volume levels
 					Mix_Volume(-1,config.sound_vol);
-					play_sound(SND_MENU1, false);
+					play_sound(SND_MENU1);
 				}
 			}
 

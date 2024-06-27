@@ -57,13 +57,13 @@ void animate_teleports() {
 		// Jump ahead from teleport #1
 		p1.jump(teleport_x[1], teleport_y[1], 5.0f, 0.01f);
 		p1.in_teleport = 1;
-		play_sound(SND_LEVEL_TELEPORT, false);
+		play_sound(SND_LEVEL_TELEPORT);
 	}
 	else if(p1.x == teleport_x[1] && p1.y == teleport_y[1] && !p1.in_teleport) {
 		// Jump ahead from teleport #2
 		p1.jump(teleport_x[0], teleport_y[0], 5.0f, 0.01f);
 		p1.in_teleport = 2;
-		play_sound(SND_LEVEL_TELEPORT, false);
+		play_sound(SND_LEVEL_TELEPORT);
 	}
 
 	// For player #2
@@ -71,13 +71,13 @@ void animate_teleports() {
 		// Jump ahead from teleport #1
 		p2.jump(teleport_x[1], teleport_y[1], 5.0f, 0.01f);
 		p2.in_teleport = 1;
-		play_sound(SND_LEVEL_TELEPORT, false);
+		play_sound(SND_LEVEL_TELEPORT);
 	}
 	else if(two_players && p2.x == teleport_x[1] && p2.y == teleport_y[1] && !p2.in_teleport) {
 		// Jump ahead from teleport #2
 		p2.jump(teleport_x[0], teleport_y[0], 5.0f, 0.01f);
 		p2.in_teleport = 2;
-		play_sound(SND_LEVEL_TELEPORT, false);
+		play_sound(SND_LEVEL_TELEPORT);
 	}
 
 

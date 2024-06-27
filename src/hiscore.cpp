@@ -258,7 +258,7 @@ void HISCORE_LIST::input_name(int place) {
 			else if(key[SDLK_SPACE])
 				str[pos] = ' ';
 			else if(key[SDLK_BACKSPACE]) {
-				play_sound(SND_MENU1, false);
+				play_sound(SND_MENU1);
 				typed = false;
 				str[pos] = '\0';
 				pos--;
@@ -295,7 +295,7 @@ void HISCORE_LIST::input_name(int place) {
 
 			// Modify string
 			if(typed) {
-				play_sound(SND_MENU1, false);
+				play_sound(SND_MENU1);
 				pos++;
 				if(pos > NAME_LEN-1)
 					pos = NAME_LEN-1;

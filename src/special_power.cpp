@@ -191,7 +191,7 @@ void SP_TRAP::init() {
 	icon_menu.count[RED_POWER_TRAP]--;
 
 	// Play the trap laying sound
-	play_sound(SND_TRAP, false);
+	play_sound(SND_TRAP);
 }
 
 
@@ -251,7 +251,7 @@ void SP_WILDFIRE::init() {
 	using_special_power = 0;
 
 	// Play the burning sound
-	play_sound(SND_WILDFIRE, false);
+	play_sound(SND_WILDFIRE);
 }
 
 
@@ -288,7 +288,7 @@ void SP_NAPALM::init() {
 		p1.jump(jtx, jty, 2.0f, 0.05f);
 
 		// Play the jump sound
-		play_sound(SND_JUMP, false);
+		play_sound(SND_JUMP);
 	}
 	if(!map_solid(oldx[1], oldy[1]) && two_players) {
 		int jtx = 0, jty = 0;
@@ -296,7 +296,7 @@ void SP_NAPALM::init() {
 		p2.jump(jtx, jty, 2.0f, 0.05f);
 
 		// Play the jump sound
-		play_sound(SND_JUMP, false);
+		play_sound(SND_JUMP);
 	}
 
 
@@ -342,13 +342,13 @@ void SP_NAPALM::update() {
 					p1.jump(oldx[0], oldy[0], 2.0f, 0.05f);
 
 					// Play the jump sound
-					play_sound(SND_JUMP, false);
+					play_sound(SND_JUMP);
 				}
 				if(two_players && !map_solid(oldx[1], oldy[1])) {
 					p2.jump(oldx[1], oldy[1], 2.0f, 0.05f);
 
 					// Play the jump sound
-					play_sound(SND_JUMP, false);
+					play_sound(SND_JUMP);
 				}
 
 				// ..and we're done!
@@ -357,7 +357,7 @@ void SP_NAPALM::update() {
 			}
 
 			// Play the explosion sound
-			play_sound(SND_EXPLO, true);
+			play_sound(SND_EXPLO);
 		}
 	}
 
@@ -393,7 +393,7 @@ void SP_WISP::init() {
 	using_special_power = 0;
 
 	// Play the wisp sound
-	play_sound(SND_WISP, false);
+	play_sound(SND_WISP);
 }
 
 
@@ -431,7 +431,7 @@ void SP_POTATOMAN::init() {
 	using_special_power = 0;
 
 	// Play the potato man sound
-	play_sound(SND_POTATOMAN, false);
+	play_sound(SND_POTATOMAN);
 }
 
 
@@ -482,7 +482,7 @@ void SP_FLOWERPOWER::init() {
 	}
 
 	// Play the sound
-	play_sound(SND_BOMB, false);
+	play_sound(SND_BOMB);
 
 	// Reduce the power amount
 	icon_menu.count[GREEN_POWER_FLOWERPOWER]--;
@@ -549,7 +549,7 @@ void SP_TELEPORT::init() {
 	icon_menu.count[BLUE_POWER_TELEPORT]--;
 
 	// Play the teleport sound
-	play_sound(SND_TELEPORT, false);
+	play_sound(SND_TELEPORT);
 }
 
 
@@ -694,7 +694,7 @@ void SP_TURN::init() {
 	icon_menu.count[BLUE_POWER_TURN]--;
 
 	// Play the turn sound
-	play_sound(SND_TURN, false);
+	play_sound(SND_TURN);
 }
 
 
@@ -755,7 +755,7 @@ void SP_LIGHTNING::init() {
 		icon_menu.count[BLUE_POWER_LIGHTNING]--;
 
 		// Play the lightning sound
-		play_sound(SND_LIGHTNING, false);
+		play_sound(SND_LIGHTNING);
 	}
 }
 

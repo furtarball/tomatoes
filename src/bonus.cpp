@@ -153,7 +153,7 @@ void move_bonus() {
 		int sound = last_sound;
 		while(sound == last_sound)
 			sound = RAND(SND_BONUS1, SND_BONUS3);
-		play_sound(sound, false);
+		play_sound(sound);
 		last_sound = sound;
 	}
 }

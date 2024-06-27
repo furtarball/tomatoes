@@ -89,7 +89,7 @@ void init_mixer();
 void play_music(char *file);
 
 // Play a sound
-void play_sound(int sound, bool random_freq);
+void play_sound(int sound);
 
 // If the current music has finished, start playing another
 void music_finished();

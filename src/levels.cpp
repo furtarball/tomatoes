@@ -259,7 +259,7 @@ bool change_level() {
 
 	// Check if there's three seconds left
 	if(num_seconds_left == 3 && !sound_played) {
-		play_sound(SND_FINISH, false);
+		play_sound(SND_FINISH);
 		sound_played = true;
 	}
 
@@ -277,7 +277,7 @@ bool change_level() {
 			p1.jump(bx, by, 2.0f, 0.05f);
 
 			// Play the jump sound
-			play_sound(SND_JUMP, false);
+			play_sound(SND_JUMP);
 		}
 
 		if(two_players && p2.alive && !p2.dying && !map_solid((int)p2.get_real_x(), (int)p2.get_real_y()) && !p2.jumping && !(using_special_power == 2 && which_special_power == BLUE_POWER_TELEPORT)) {
@@ -285,7 +285,7 @@ bool change_level() {
 			p2.jump(bx, by, 2.0f, 0.05f);
 
 			// Play the jump sound
-			play_sound(SND_JUMP, false);
+			play_sound(SND_JUMP);
 		}
 
 

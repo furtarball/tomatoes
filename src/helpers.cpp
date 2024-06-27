@@ -126,7 +126,7 @@ void WISP::move() {
 			add_particle(ppos, pdir, RAND(30,60), RANDF(0.1f,0.2f), 0, c1, c2, part_glow);
 		}
 
-		play_sound(SND_WISP, false);
+		play_sound(SND_WISP);
 	}
 
 	// Animate the glow
@@ -388,7 +388,7 @@ void POTATOMAN::kick(ENEMY *e) {
 	e->nextdir = e->dir;
 	e->offset = 0.0f;
 	e->tx = e->x; e->ty = e->y;
-	play_sound(SND_KICK, false);
+	play_sound(SND_KICK);
 }
 
 
@@ -448,7 +448,7 @@ void POTATOMAN::move() {
 		anim = 0.0f;
 
 		// Play the sound
-		play_sound(SND_POTATOMAN2, false);
+		play_sound(SND_POTATOMAN2);
 		return;
 	}
 

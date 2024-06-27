@@ -254,7 +254,7 @@ void do_special_selection() {
 			add_comment(icon_colors[icon_menu.selected], (char*)icon_names[icon_menu.selected]);
 
 			// Play the sound
-			play_sound(SND_MENU1, false);
+			play_sound(SND_MENU1);
 		}
 	}
 	else
@@ -270,7 +270,7 @@ void do_special_selection() {
 			add_comment(icon_colors[icon_menu.selected], (char*)icon_names[icon_menu.selected]);
 
 			// Play the sound
-			play_sound(SND_MENU1, false);
+			play_sound(SND_MENU1);
 		}
 	}
 	else
@@ -318,7 +318,7 @@ void do_special_selection() {
 		}
 
 		// Play the sound
-		play_sound(SND_MENU2, false);
+		play_sound(SND_MENU2);
 		return;
 	}
 
@@ -335,7 +335,7 @@ void do_special_selection() {
 		}
 
 		// Play the sound
-		play_sound(SND_MENU2, false);
+		play_sound(SND_MENU2);
 	}
 
 }

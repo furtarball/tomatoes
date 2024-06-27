@@ -340,7 +340,7 @@ void PLAYER::move() {
 			show_icon(who2);
 
 			// Play the appear sound
-			play_sound(SND_APPEAR, false);
+			play_sound(SND_APPEAR);
 
 		}
 		return;
@@ -522,7 +522,7 @@ void PLAYER::move() {
 
 				// Play the jumping sound
 				if(jumping)
-					play_sound(SND_JUMP, false);
+					play_sound(SND_JUMP);
 			}
 		}
 	}
@@ -570,7 +570,7 @@ void PLAYER::move() {
 
 				// Play the jumping sound
 				if(jumping)
-					play_sound(SND_JUMP, false);
+					play_sound(SND_JUMP);
 			}
 		}
 	}
@@ -617,7 +617,7 @@ void PLAYER::move() {
 
 				// Play the jumping sound
 				if(jumping)
-					play_sound(SND_JUMP, false);
+					play_sound(SND_JUMP);
 			}
 		}
 	}
@@ -662,7 +662,7 @@ void PLAYER::move() {
 
 				// Play the jumping sound
 				if(jumping)
-					play_sound(SND_JUMP, false);
+					play_sound(SND_JUMP);
 			}
 		}
 		else {
@@ -691,7 +691,7 @@ void PLAYER::move() {
 
 				// Play the jumping sound
 				if(jumping)
-					play_sound(SND_JUMP, false);
+					play_sound(SND_JUMP);
 			}
 		}
 	}
@@ -725,7 +725,7 @@ void PLAYER::move() {
 		num_bombs++;
 
 		// Play the sound
-		play_sound(SND_BOMB, false);
+		play_sound(SND_BOMB);
 	}
 
 
@@ -757,7 +757,7 @@ void PLAYER::die() {
 	int sound = last_sound;
 	while(sound == last_sound)
 		sound = RAND(SND_DIE1, SND_DIE6);
-	play_sound(sound, false);
+	play_sound(sound);
 	last_sound = sound;
 	
 	// Rumble the controller a bit

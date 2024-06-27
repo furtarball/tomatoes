@@ -146,23 +146,15 @@ void search_music() {
 
 // If the current music has finished, start playing another
 void music_finished() {
-	static bool skip_down = false;
-
 	if(!config.sound || !num_music_files || !config.music_vol)
 		return;
-	
-	if(skip_down == false) {
-		// Play the current song from the playlist
-		play_music(music_files[cur_music]);
 
-		cur_music++;
-		if(cur_music > num_music_files-1)
-			shuffle_playlist();
-		skip_down = true;
-	}
-	if((!key[SDLK_F1]) && (btn[0][SDL_CONTROLLER_BUTTON_DPAD_RIGHT]) && (btn[1][SDL_CONTROLLER_BUTTON_DPAD_RIGHT]))
-		skip_down = false;
+	// Play the current song from the playlist
+	play_music(music_files[cur_music]);
 
+	cur_music++;
+	if(cur_music > num_music_files-1)
+		shuffle_playlist();
 }
 
 
@@ -287,26 +279,10 @@ void play_music(char *file) {
 
 
 // Play a sound
-void play_sound(int sound, bool random_freq) {
+void play_sound(int sound) {
 	if(!config.sound)
 		return;
 
 	// Play the sound
 	Mix_PlayChannel(-1, sounds[sound], 0);
-	//int channel = Mix_PlayChannel(-1, sounds[sound], 0);
-
-	// Random the frequency
-	// This doesn't work in SDL!
-/*	if(random_freq) {
-		int freq;
-		int freq_change[2];
-//		freq = FSOUND_GetFrequency(channel);
-
-		freq_change[0] = (int)((float)freq * 0.3f);
-		freq_change[1] = (int)((float)freq * 0.1f);
-
-		// Upload the frequency to the sample
-//		FSOUND_SetFrequency(channel, freq+RAND(-freq_change[0], freq_change[1]));
-	}
-*/
 }

@@ -297,7 +297,7 @@ int trace_explosion(int sx, int sy, int dir, int type, bool explosions, bool rec
 			potatoman.anim = 0.0f;
 
 			// Play the sound
-			play_sound(SND_POTATOMAN2, false);
+			play_sound(SND_POTATOMAN2);
 		}
 */
 	}
@@ -319,7 +319,7 @@ int BOMB::explode(bool explosions) {
 			p2.num_bombs--;
 
 		// Play the explosion sound
-		play_sound(SND_EXPLO, true);
+		play_sound(SND_EXPLO);
 	}
 
 
@@ -357,7 +357,7 @@ int BOMB::explode(bool explosions) {
 		potatoman.anim = 0.0f;
 
 		// Play the sound
-		play_sound(SND_POTATOMAN2, false);
+		play_sound(SND_POTATOMAN2);
 	}
 */
 	return num_killed;
@@ -384,7 +384,7 @@ void BOMB::move() {
 
 				// Play the flower power sound
 				if(type == BTYP_FLOWER)
-					play_sound(SND_FLOWERPOWER, false);
+					play_sound(SND_FLOWERPOWER);
 			}
 			return;
 		}
@@ -409,7 +409,7 @@ void BOMB::move() {
 			p1.jump(jtx, jty, 2.0f, 0.05f);
 
 			// Play the jump sound
-			play_sound(SND_JUMP, false);
+			play_sound(SND_JUMP);
 		}
 		if(who & TRACED_P2) {
 			// P2 jumps
@@ -420,7 +420,7 @@ void BOMB::move() {
 			p2.jump(jtx, jty, 2.0f, 0.05f);
 
 			// Play the jump sound
-			play_sound(SND_JUMP, false);
+			play_sound(SND_JUMP);
 		}
 	}
 
@@ -449,7 +449,7 @@ void BOMB::move() {
 
 			// Check if we have killed 5 or more enemies
 			if(killed >= 5) {
-				play_sound(SND_KILLED5, false);
+				play_sound(SND_KILLED5);
 
 				// Create the "bonus rain"
 				create_bonus_rain();
@@ -465,14 +465,14 @@ void BOMB::move() {
 			p1.jump(oldx[0], oldy[0], 2.0f, 0.05f);
 
 			// Play the jump sound
-			play_sound(SND_JUMP, false);
+			play_sound(SND_JUMP);
 		}
 		if(oldx[1] != -1) {
 			// P2 jumps
 			p2.jump(oldx[1], oldy[1], 2.0f, 0.05f);
 
 			// Play the jump sound
-			play_sound(SND_JUMP, false);
+			play_sound(SND_JUMP);
 		}
 		alive = false;
 

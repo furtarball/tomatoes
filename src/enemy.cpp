@@ -201,7 +201,7 @@ void move_enemies() {
 
 			// Play the appear sound
 			if(created) {
-				play_sound(SND_APPEAR, false);
+				play_sound(SND_APPEAR);
 				enemy_creation_counter = enemy_creation_interval;
 			}
 		}
@@ -560,7 +560,7 @@ void ENEMY::move() {
 
 		// Play the burning sound
 		if(burnt_somebody)
-			play_sound(SND_WILDFIRE, false);
+			play_sound(SND_WILDFIRE);
 
 		if(!kicked)
 			return;
@@ -715,7 +715,7 @@ void ENEMY::die() {
 	int sound = last_sound;
 	while(sound == last_sound)
 		sound = RAND(SND_DIE1, SND_DIE6);
-	play_sound(sound, false);
+	play_sound(sound);
 	last_sound = sound;
 }
 

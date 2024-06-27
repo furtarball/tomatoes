@@ -140,7 +140,7 @@ void TRAP::move() {
 		}
 
 		// Play the sound
-		play_sound(SND_TRAP, false);
+		play_sound(SND_TRAP);
 	}
 
 
