@@ -166,7 +166,7 @@ int main(int argc, char *argv[]) {
         SDL_GL_DeleteContext(glctx);
         
         // Free controllers
-        for(int i = 0; i < 2, pads[i] != NULL; ++i) {
+        for(int i = 0; (i < 2) && (pads[i] != NULL); ++i) {
 	        SDL_GameControllerClose(pads[i]);
 	}
 
