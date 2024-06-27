@@ -654,6 +654,7 @@ int show_menu(int menu_id) {
 		                        int dir = stick_direction(event.caxis.axis, event.caxis.value);
 		                        if(dir) {
 		                                if(setting_key) {
+												config.ctl_type[whose_keys] = CONTROLLER;
 		                                        (*key_to_set) = dir;
 		                                        setting_key = false;
 		                                }
