@@ -29,6 +29,7 @@
 
 #include <stdio.h>
 #include <map>
+#include <cmath>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_image.h>
@@ -80,7 +81,7 @@ static float light_position2[] = { -MAP_W*0.5f, 2.0f, MAP_H*0.25f, 1.0f };
 
 // Arrays containing currently pressed keys and buttons
 std::map<SDL_Keycode, Uint8> key;
-Uint8 btn[2][SDL_CONTROLLER_BUTTON_MAX] = {0};
+Uint8 btn[2][SDL_CONTROLLER_BUTTON_MAX + 4] = {0}; // + 4 so we can pretend analog sticks are d-pads
 
 // Function that returns state of pressed key/button for given player
 Uint8 pressed(int key_or_btn, int which_player) {
@@ -293,6 +294,29 @@ void draw() {
 	SDL_GL_SwapWindow(window);
 }
 
+// Convert stick position to cardinal direction
+int stick_direction(int axis, int value) {
+        // Remember stick position
+        static int valx = 0;
+        static int valy = 0;
+        bool cond = (value >= 12288) || (value <= -12288); // 1 if value is outside dead zone
+        if((axis % 2) == 0) // horizontal axes are even in SDL_GameControllerAxis
+                valx = cond * value;
+        else
+                valy = cond * -value;
+        
+        if((valy == 0) && (valx == 0))
+                return 0;
+        double angle = atan2((double)valy, (double)valx);
+        if((angle <= (0.75 * M_PI)) && (angle > (0.25 * M_PI)))
+                return STICK_UP;
+        if((angle <= (0.25 * M_PI)) && (angle > (-0.25 * M_PI)))
+                return STICK_RIGHT;
+        if((angle <= (-0.25 * M_PI)) && (angle > (-0.75 * M_PI)))
+                return STICK_DOWN;
+        else
+                return STICK_LEFT;
+}
 
 // Handle SDL events
 // Return true if we're going to quit
@@ -321,6 +345,13 @@ bool handle_event(SDL_Event &event) {
 		        // Update the 'btn' array
 			btn[event.cbutton.which][event.cbutton.button] = 0;
 			return false;
+		
+		case SDL_CONTROLLERAXISMOTION: // Analog sticks
+		        memset(btn[event.caxis.which] + STICK_UP, 0, 4);
+		        int dir = stick_direction(event.caxis.axis, event.caxis.value);
+		        if(dir)
+          	                btn[event.caxis.which][dir] = 1;
+		        return false;
 	}
 
 	return false;

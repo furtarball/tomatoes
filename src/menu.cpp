@@ -46,7 +46,7 @@
 #include "mpak.h"
 #include "menu.h"
 #include "hiscore.h"
-
+#include <iostream>
 
 // Version
 #define VERSION		"v1.6"
@@ -129,15 +129,19 @@ char *key_name(int key) {
 const char *btn_name(int btn) {
         static const char* const names[] = {
                 "A", "B", "X", "Y", "SELECT/BACK", "GUIDE/HOME", "START", "LEFT STICK", "RIGHT STICK",
-                "LEFT SHOULDER", "RIGHT SHOULDER", "UP", "DOWN", "LEFT", "RIGHT"
+                "LEFT SHOULDER", "RIGHT SHOULDER", "D-PAD UP", "D-PAD DOWN", "D-PAD LEFT", "D-PAD RIGHT",
+                "L. STICK UP", "L. STICK DOWN", "L. STICK LEFT", "L. STICK RIGHT"
         };
         if(btn == -1)
                 return "PRESS A BUTTON";	// This is displayed when we're setting
 								// a button.
-	else if((btn >= 0) && (btn <= 14))
+	else if((btn > -1) && (btn <= SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
                 return names[btn];
+        // After the d-pad there are a few buttons in the SDL_GameControllerButton enum that we don't care about 
+	else if(btn >= STICK_UP)
+		return names[btn - (SDL_CONTROLLER_BUTTON_MAX - 1 - SDL_CONTROLLER_BUTTON_DPAD_RIGHT)];
 	else
-		return "";
+	        return "";
 }
 
 // Helper function which draws the credits
@@ -548,6 +552,17 @@ void draw_menu(int menu_id, int menu_item, int place, float fade, HISCORE_LIST *
 	end_fonts();
 }
 
+// Necessary to make analog sticks usable in menus
+static bool stick_cooldown() {
+        static Uint32 last = SDL_GetTicks();
+        Uint32 r = SDL_GetTicks();
+        r -= last;
+        if(r >= 150) {
+                last = (r + last);
+                return true;
+        }
+        return false;
+}
 
 // Show a menu. Returns the action taken.
 int show_menu(int menu_id) {
@@ -634,6 +649,22 @@ int show_menu(int menu_id) {
 		                        // Update the 'btn' array
 			                btn[event.cbutton.which][event.cbutton.button] = 0;
 			                break;
+			        
+		                case SDL_CONTROLLERAXISMOTION: // Analog sticks
+		                        int dir = stick_direction(event.caxis.axis, event.caxis.value);
+		                        if(dir) {
+		                                if(setting_key) {
+		                                        (*key_to_set) = dir;
+		                                        setting_key = false;
+		                                }
+		                                else { // An analog stick can only be in one position at a time
+		                                        memset(btn[event.caxis.which] + STICK_UP, 0, 4);
+                                  	                btn[event.caxis.which][dir] = 1;
+                              	                }
+                      	                }
+                      	                else
+                      	                        memset(btn[event.caxis.which] + STICK_UP, 0, 4);
+		                        break;
 			}
 		}
 
@@ -668,7 +699,7 @@ int show_menu(int menu_id) {
 				Mix_HaltMusic();
 
 			// Handle the cursor movement
-			if((key[SDLK_UP] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_UP] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_UP]) || ((key[SDLK_LEFT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_LEFT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_LEFT]) && menu_item != MENU_MUSICVOL && menu_item != MENU_SOUNDVOL)) {
+			if((key[SDLK_UP] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_UP] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_UP] || ((btn[0][STICK_UP] || btn[1][STICK_UP]) && stick_cooldown())) || ((key[SDLK_LEFT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_LEFT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_LEFT] || ((btn[0][STICK_LEFT] || btn[1][STICK_LEFT]) && stick_cooldown())) && menu_item != MENU_MUSICVOL && menu_item != MENU_SOUNDVOL)) {
 				play_sound(SND_MENU1);
 				menu_item--;
 				if(menu_id == MENU_ID_MAIN) {
@@ -685,7 +716,7 @@ int show_menu(int menu_id) {
 				}
 			}
 
-			if((key[SDLK_DOWN] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_DOWN] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_DOWN]) || ((key[SDLK_RIGHT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_RIGHT]) && menu_item != MENU_MUSICVOL && menu_item != MENU_SOUNDVOL)) {
+			if((key[SDLK_DOWN] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_DOWN] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_DOWN] || ((btn[0][STICK_DOWN] || btn[1][STICK_DOWN]) && stick_cooldown())) || ((key[SDLK_RIGHT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || ((btn[0][STICK_RIGHT] || btn[1][STICK_RIGHT]) && stick_cooldown())) && menu_item != MENU_MUSICVOL && menu_item != MENU_SOUNDVOL)) {
 				play_sound(SND_MENU1);
 				menu_item++;
 				if(menu_id == MENU_ID_MAIN) {
@@ -847,14 +878,14 @@ int show_menu(int menu_id) {
 
 			// Check the volume level sliders
 			if(menu_item == MENU_MUSICVOL) {
-				if(key[SDLK_LEFT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_LEFT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_LEFT]) {
+				if(key[SDLK_LEFT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_LEFT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_LEFT] || ((btn[0][STICK_LEFT] || btn[1][STICK_LEFT]) && stick_cooldown())) {
 					config.music_vol -= 10;
 					if(config.music_vol < 0)
 						config.music_vol = 0;
 					// Update the volume levels
 					Mix_VolumeMusic(config.music_vol);
 				}
-				if(key[SDLK_RIGHT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_RIGHT]) {
+				if(key[SDLK_RIGHT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || ((btn[0][STICK_RIGHT] || btn[1][STICK_RIGHT]) && stick_cooldown())) {
 					config.music_vol += 10;
 					if(config.music_vol > 255)
 						config.music_vol = 255;
@@ -863,7 +894,7 @@ int show_menu(int menu_id) {
 				}
 			}
 			if(menu_item == MENU_SOUNDVOL) {
-				if(key[SDLK_LEFT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_LEFT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_LEFT]) {
+				if(key[SDLK_LEFT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_LEFT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_LEFT] || ((btn[0][STICK_LEFT] || btn[1][STICK_LEFT]) && stick_cooldown())) {
 					config.sound_vol -= 10;
 					if(config.sound_vol < 0)
 						config.sound_vol = 0;
@@ -871,7 +902,7 @@ int show_menu(int menu_id) {
 					Mix_Volume(-1,config.sound_vol);
 					play_sound(SND_MENU1);
 				}
-				if(key[SDLK_RIGHT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_RIGHT]) {
+				if(key[SDLK_RIGHT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || ((btn[0][STICK_RIGHT] || btn[1][STICK_RIGHT]) && stick_cooldown())) {
 					config.sound_vol += 10;
 					if(config.sound_vol > 255)
 						config.sound_vol = 255;

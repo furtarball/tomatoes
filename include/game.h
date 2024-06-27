@@ -37,7 +37,12 @@ Uint8 pressed(int key_or_btn, int which_player);
 
 // Arrays containing currently pressed keys and buttons
 extern std::map<SDL_Keycode, Uint8> key;
-extern Uint8 btn[2][SDL_CONTROLLER_BUTTON_MAX];
+extern Uint8 btn[2][SDL_CONTROLLER_BUTTON_MAX + 4]; // + 4 so we can pretend analog sticks are d-pads
+// extend the enum
+const int STICK_UP = SDL_CONTROLLER_BUTTON_MAX + 0;
+const int STICK_DOWN = SDL_CONTROLLER_BUTTON_MAX + 1;
+const int STICK_LEFT = SDL_CONTROLLER_BUTTON_MAX + 2;
+const int STICK_RIGHT = SDL_CONTROLLER_BUTTON_MAX + 3;
 
 // Kill count
 extern int kill_count;
@@ -45,6 +50,8 @@ extern int kill_count;
 // Are we playing a two player game?
 extern bool two_players;
 
+// Convert stick position to cardinal direction
+int stick_direction(int axis, int value);
 
 // Load background textures
 void load_bgrounds();
