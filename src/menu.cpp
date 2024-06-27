@@ -681,7 +681,7 @@ int show_menu(int menu_id) {
 				}
 			}
 
-			if((key[SDLK_DOWN] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_DOWN] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_DOWN]) || ((key[SDLK_RIGHT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_DOWN] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_DOWN]) && menu_item != MENU_MUSICVOL && menu_item != MENU_SOUNDVOL)) {
+			if((key[SDLK_DOWN] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_DOWN] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_DOWN]) || ((key[SDLK_RIGHT] || btn[0][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_RIGHT]) && menu_item != MENU_MUSICVOL && menu_item != MENU_SOUNDVOL)) {
 				play_sound(SND_MENU1, false);
 				menu_item++;
 				if(menu_id == MENU_ID_MAIN) {
