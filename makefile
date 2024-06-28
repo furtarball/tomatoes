@@ -35,7 +35,7 @@ DIR_DEFINES = -DLINUX -DMPK_DIR=\"$(MPKDIR)\" -DMUSIC_DIR=\"$(MUSICDIR)\" -DHISC
 
 
 # SDL flags
-SDL_FLAGS = `sdl-config --cflags`
+SDL_FLAGS = `sdl2-config --cflags`
 
 
 # Debugmode stuff

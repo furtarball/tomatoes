@@ -261,18 +261,45 @@ void HISCORE_LIST::input_name(int place) {
 				str[pos] = '-';
 			else if(key[SDLK_SPACE])
 				str[pos] = ' ';
-			else if(key[SDLK_BACKSPACE]) {
+			else if(key[SDLK_BACKSPACE] || btn[0][SDL_CONTROLLER_BUTTON_B] || btn[1][SDL_CONTROLLER_BUTTON_B]) {
 				play_sound(SND_MENU1);
 				typed = false;
-				str[pos] = '\0';
-				pos--;
-				if(pos < 0)
-					pos = 0;
+				if(str[pos] == '\0') {
+					pos--;
+					if(pos < 0)
+						pos = 0;
+				}
 				str[pos] = '\0';
 			}
-			else if((key[SDLK_RETURN] || btn[0][SDL_CONTROLLER_BUTTON_A] || btn[1][SDL_CONTROLLER_BUTTON_A]) && pos > 0 && str[0] != ' ') {
+			// Pick letters with a d-pad or an analog stick
+			else if((pos < NAME_LEN-1) && (btn[0][SDL_CONTROLLER_BUTTON_DPAD_UP] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_UP] || ((btn[0][STICK_UP] || btn[1][STICK_UP]) && stick_cooldown()))) {
+				if(str[pos] == '\0')
+					str[pos] = 'Z';
+				else if((str[pos] <= 'Z') && (str[pos] > 'A'))
+					str[pos]--;
+				else if(str[pos] == 'A')
+					str[pos] = 'Z';
+				typed = false;
+			}
+			else if((pos < NAME_LEN-1) && (btn[0][SDL_CONTROLLER_BUTTON_DPAD_DOWN] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_DOWN] || ((btn[0][STICK_DOWN] || btn[1][STICK_DOWN]) && stick_cooldown()))) {
+				if(str[pos] == '\0')
+					str[pos] = 'A';
+				else if((str[pos] >= 'A') && (str[pos] < 'Z'))
+					str[pos]++;
+				else if(str[pos] == 'Z')
+					str[pos] = 'A';
+				typed = false;
+			}
+			else if(btn[0][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || btn[1][SDL_CONTROLLER_BUTTON_DPAD_RIGHT] || ((btn[0][STICK_RIGHT] || btn[1][STICK_RIGHT]) && stick_cooldown())) {
+				if(str[pos] == '\0')
+					typed = false;
+			}
+			else if(str[pos] == '\0' && (key[SDLK_RETURN] || btn[0][SDL_CONTROLLER_BUTTON_A] || btn[1][SDL_CONTROLLER_BUTTON_A]) && pos > 0 && str[0] != ' ') {
 				fading = 2;
 				typed = false;
+			}
+			else if(str[pos] != '\0' && (key[SDLK_RETURN] || btn[0][SDL_CONTROLLER_BUTTON_A] || btn[1][SDL_CONTROLLER_BUTTON_A])) {
+				// A or ENTER was pressed while choosing a letter on a controller. Doing nothing now means confirming the choice
 			}
 			else {
 				typed = false;

@@ -61,6 +61,9 @@ extern float back_anim;
 extern float bx_roll, by_roll;
 extern float bx_roll_dir, by_roll_dir;
 
+// Necessary to make analog sticks usable in menus
+bool stick_cooldown();
+
 void load_menus();
 int show_menu(int menu_id);
 void draw_menu(int menu_id, int menu_item, int place, float fade, HISCORE_LIST *list);
