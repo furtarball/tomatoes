@@ -14,7 +14,7 @@ Original website: https://tomatoes.sourceforge.net/
 * Re-added the ability to skip background music
 
 ## Compiling
-1. Install dependencies: `SDL2`, `SDL2-mixer`, `SDL2-image`, `mesa-libGLU`
+1. Install dependencies: `SDL2-dev`, `SDL2-mixer-dev`, `SDL2-image-dev`, `mesa-libGLU-dev` (called `glu-dev` in Alpine), `libmodplug`
 2. Clone this repository and `cd` into it
 3. `mkdir obj`
 4. `make -j$(nproc)`
