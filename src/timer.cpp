@@ -55,7 +55,7 @@ void start_timer(int fps) {
 	timer_count = 0;
 	game_paused = false;
 	timer = SDL_AddTimer((1000/fps), timer_callback, 0);
-	if(timer == NULL)
+	if(timer == 0)
 		error_msg("Error setting timer!\n%s", SDL_GetError());
 }
 
