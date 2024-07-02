@@ -13,22 +13,26 @@ MARCH = x86-64
 # Directory defines, you can use these defaults or adjust them if
 # necessary. Remember to include the trailing /
 
-# MPK directory (where 'tomatoes.mpk' is), default: ./
-MPKDIR = ./
+ifeq ($(PREFIX),)
+	PREFIX := /usr
+endif
 
-# Music directory (where the music files are), default: ./music/
-MUSICDIR = ./music/
+# MPK directory (where 'tomatoes.mpk' is)
+MPKDIR = $(DESTDIR)$(PREFIX)/share/tomatoes/
 
-# Hiscore directory (where the hiscores are written to), default: ./
+# Music directory (where the music files are)
+MUSICDIR = $(DESTDIR)$(PREFIX)/share/tomatoes/music/
+
+# Hiscore directory (where the hiscores are written to)
 # We need read/write access!
-HISCOREDIR = ./
+HISCOREDIR = ~/.tomatoes/
 
-# Config directory (where the 'config.cfg' is), default: ./
+# Config directory (where the 'config.cfg' is)
 # We need read/write access!
-CONFIGDIR = ./
+CONFIGDIR = ~/.tomatoes/
 
-# Override directory (unused at the moment), default: ./data/
-OVERRIDEDIR = ./data/
+# Override directory (unused at the moment)
+OVERRIDEDIR = ~/.tomatoes/override/
 
 
 DIR_DEFINES = -DLINUX -DMPK_DIR=\"$(MPKDIR)\" -DMUSIC_DIR=\"$(MUSICDIR)\" -DHISCORE_DIR=\"$(HISCOREDIR)\" -DCONFIG_DIR=\"$(CONFIGDIR)\" -DOVERRIDE_DIR=\"$(OVERRIDEDIR)\"
@@ -62,7 +66,10 @@ INCLUDES = -I./include
 
 
 # Targets
-all: $(TARGET)
+all: objdir $(TARGET)
+
+objdir:
+	mkdir -p obj
 
 # Check dependancies
 DEPS = $(subst .o,.d,$(OBJS))
@@ -85,3 +92,10 @@ obj/%.o: src/%.cpp
 # Compress the exe with UPX
 compress: $(TARGET)
 	$(COMPRESS) $(TARGET)
+
+install: $(TARGET)
+	install -D -t $(DESTDIR)$(PREFIX)/bin ./tomatoes
+	install -D ./icon.png $(DESTDIR)$(PREFIX)/share/pixmaps/tomatoes.png
+	install -D -t $(MPKDIR) ./data/tomatoes.mpk
+	install -D -t $(MUSICDIR) ./data/IHaveNoTomatoes.it
+	install -D -t $(CONFIGDIR) ./data/config.cfg
