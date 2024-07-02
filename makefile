@@ -79,10 +79,10 @@ $(TARGET): $(OBJS)
 	$(CC) -o $(TARGET) $(OBJS) $(LDFLAGS)
 
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJS) $(TARGET) tomatoes.desktop
 
 veryclean:
-	rm -f $(OBJS) $(TARGET) $(DEPS)
+	rm -f $(OBJS) $(TARGET) $(DEPS) tomatoes.desktop
 
 rebuild: veryclean all
 
@@ -99,3 +99,5 @@ install: $(TARGET)
 	install -D -t $(MPKDIR) ./data/tomatoes.mpk
 	install -D -t $(MUSICDIR) ./data/IHaveNoTomatoes.it
 	install -D -t $(CONFIGDIR) ./data/config.cfg
+	sed "s:WORKDIR:$(DESTDIR)$(PREFIX)/bin:g" tomatoes.desktop.in > tomatoes.desktop
+	install -D -t $(DESTDIR)$(PREFIX)/share/applications tomatoes.desktop
