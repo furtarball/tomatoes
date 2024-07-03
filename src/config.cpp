@@ -29,6 +29,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
 #include "config.h"
 #include "init.h"
 
@@ -36,7 +37,6 @@
 // The config files are saved to the users HOME directory in Linux, but
 // not in Windows.
 #ifdef LINUX
-#include <string>
 #include <sys/stat.h>
 #include <dirent.h>
 using namespace std;
@@ -77,6 +77,7 @@ string get_tomatoes_dir() {
 // and if that fails it uses the CONFIG_DIR defined in the
 // makefile.
 char *get_config_location(bool write) {
+        static std::string defpath = std::string(path) + std::string(CONFIG_DIR) + "config.cfg";
 #ifdef LINUX
 	// Get the path to the config file
 	static string tmp = get_tomatoes_dir() + "config.cfg";
@@ -86,7 +87,7 @@ char *get_config_location(bool write) {
 		FILE *ftest = fopen(tmp.c_str(), "rt");
 		if(!ftest) {
 			// It doesn't exist, try the default
-			return (CONFIG_DIR "config.cfg");
+			return defpath.data();
 		}
 		fclose(ftest);
 	}
@@ -95,7 +96,7 @@ char *get_config_location(bool write) {
 #endif
 
 	// Return the CONFIG_DIR
-	return (CONFIG_DIR "config.cfg");
+	return defpath.data();
 }
 
 

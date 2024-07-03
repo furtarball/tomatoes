@@ -92,13 +92,6 @@ void error_msg(const char *msg, ...) {
 // Initialize SDL and OpenGL
 void init_sdl_and_gl() {
 
-	// Load the config
-	load_config(get_config_location(), &config);
-
-	// Check for 8-bit
-	if(config.vid_color_depth == 8)
-		error_msg("Sorry, 8-bit color depth is not supported!\nYou must use 15, 16, 24 or 32-bit mode.\n");
-
 	// Initialize SDL with video and timer support
 	if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER|SDL_INIT_AUDIO|SDL_INIT_GAMECONTROLLER) < 0)
 		error_msg("Unable to init SDL: %s", SDL_GetError());
@@ -107,6 +100,9 @@ void init_sdl_and_gl() {
         path = SDL_GetBasePath();
         if(path == NULL)
                 error_msg("Unable to get the path to the executable: %s", SDL_GetError());
+
+      	// Load the config
+	load_config(get_config_location(), &config);
 
 	// Hide the mouse cursor
 	SDL_ShowCursor(SDL_DISABLE);

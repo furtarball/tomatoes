@@ -27,9 +27,8 @@ MUSICDIR = ../share/tomatoes/music/
 # We need read/write access!
 HISCOREDIR = ~/.tomatoes/
 
-# Config directory (where the 'config.cfg' is)
-# We need read/write access!
-CONFIGDIR = ~/.tomatoes/
+# Default config directory (where the default 'config.cfg' is); relative to the location of the binary
+CONFIGDIR = ../share/tomatoes/
 
 # Override directory (unused at the moment)
 OVERRIDEDIR = ~/.tomatoes/override/
@@ -101,6 +100,6 @@ install: $(TARGET)
 	install -D ./icon.png $(DESTDIR)$(PREFIX)/share/pixmaps/tomatoes.png
 	install -D -t $(BINDEST)/$(MPKDIR) ./data/tomatoes.mpk
 	install -D -t $(BINDEST)/$(MUSICDIR) ./data/IHaveNoTomatoes.it
-	install -D -t $(CONFIGDIR) ./data/config.cfg
+	install -D -t $(BINDEST)/$(CONFIGDIR) ./data/config.cfg
 	install -D -t $(DESTDIR)$(PREFIX)/share/applications io.github.furtarball.tomatoes.desktop
 	install -D -t $(DESTDIR)$(PREFIX)/share/metainfo ./io.github.furtarball.tomatoes.appdata.xml
