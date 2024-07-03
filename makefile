@@ -99,5 +99,5 @@ install: $(TARGET)
 	install -D -t $(MPKDIR) ./data/tomatoes.mpk
 	install -D -t $(MUSICDIR) ./data/IHaveNoTomatoes.it
 	install -D -t $(CONFIGDIR) ./data/config.cfg
-	sed "s:WORKDIR:$(DESTDIR)$(PREFIX)/bin:g" tomatoes.desktop.in > tomatoes.desktop
-	install -D -t $(DESTDIR)$(PREFIX)/share/applications tomatoes.desktop
+	install -D -t $(DESTDIR)$(PREFIX)/share/applications io.github.furtarball.tomatoes.desktop
+	install -D -t $(DESTDIR)$(PREFIX)/share/metainfo ./io.github.furtarball.tomatoes.appdata.xml

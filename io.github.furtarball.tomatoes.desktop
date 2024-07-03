@@ -2,8 +2,7 @@
 Type=Application
 Name=I Have No Tomatoes
 Comment=How many tomatoes can you smash in ten short minutes?
-Path=WORKDIR
-Exec=WORKDIR/tomatoes
+Exec=tomatoes
 Icon=tomatoes
 Terminal=false
 Categories=Game
