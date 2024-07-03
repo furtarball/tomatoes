@@ -50,6 +50,9 @@ struct _SDL_GameController;
 typedef struct _SDL_GameController SDL_GameController;
 extern SDL_GameController *pads[2];
 
+// Keep a global string with a path to the executable
+extern char* path;
+
 // Initialize SDL and OpenGL
 void init_sdl_and_gl();
 

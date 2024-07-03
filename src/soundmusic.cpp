@@ -32,7 +32,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include "game.h"
-#include <string.h>
+#include <string>
+#include <cstring>
 #include <dirent.h>
 #include <ctype.h>
 #include "mymath.h"
@@ -77,8 +78,9 @@ void search_music() {
 	DIR *dp;
 	dirent *ep;
 
+        std::string musicpath = std::string(path) + std::string(MUSIC_DIR);
 	// Search files from the music directory
-	dp = opendir(MUSIC_DIR);
+	dp = opendir(musicpath.data());
 	if(!dp || !config.sound || !config.music_vol) {
 		// No files found, or the sound is turned off
 		num_music_files = 0;
@@ -94,7 +96,7 @@ void search_music() {
 	// Start searching
 	while((ep = readdir(dp)) ) {
 		if(num_music_files >= MAX_MUSIC-1) {
-			printf("Warning: Too many music files in '%s' directory!\n", MUSIC_DIR);
+			printf("Warning: Too many music files in '%s' directory!\n", musicpath.data());
 			break;
 		}
 
@@ -255,7 +257,8 @@ void play_music(char *file) {
 	game_paused = true;
 
 	char str[256] = "";
-	sprintf(str, "%s%s", MUSIC_DIR, file);
+	std::string musicpath = std::string(path) + std::string(MUSIC_DIR);
+	sprintf(str, "%s%s", musicpath.data(), file);
 	if(music_mod){
 		Mix_HaltMusic();
 		Mix_FreeMusic(music_mod);

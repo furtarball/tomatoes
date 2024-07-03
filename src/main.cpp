@@ -170,18 +170,21 @@ int main(int argc, char *argv[]) {
 	        SDL_GameControllerClose(pads[i]);
 	}
 
-	// Kill SDL
-	SDL_Quit();
-
-	// Close the pakfile
-	pakfile.close_mpk();
-
-	// Close the FMOD
+        // Close the FMOD
 	if(music_mod){
 		Mix_HaltMusic();
 		Mix_FreeMusic(music_mod);
 	}
 	Mix_CloseAudio();
+
+        // Free the path string
+        SDL_free(path);
+
+	// Kill SDL
+	SDL_Quit();
+
+	// Close the pakfile
+	pakfile.close_mpk();
 
 	// Save the config
 	save_config(get_config_location(true), &config);

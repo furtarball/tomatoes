@@ -17,11 +17,11 @@ ifeq ($(PREFIX),)
 	PREFIX := /usr
 endif
 
-# MPK directory (where 'tomatoes.mpk' is)
-MPKDIR = $(DESTDIR)$(PREFIX)/share/tomatoes/
+# MPK directory (where 'tomatoes.mpk' is); relative to the location of the binary
+MPKDIR = ../share/tomatoes/
 
-# Music directory (where the music files are)
-MUSICDIR = $(DESTDIR)$(PREFIX)/share/tomatoes/music/
+# Music directory (where the music files are); relative to the location of the binary
+MUSICDIR = ../share/tomatoes/music/
 
 # Hiscore directory (where the hiscores are written to)
 # We need read/write access!
@@ -93,11 +93,14 @@ obj/%.o: src/%.cpp
 compress: $(TARGET)
 	$(COMPRESS) $(TARGET)
 
+# MPKDIR and MUSICDIR are relative to the location of the executable
+BINDEST = $(DESTDIR)$(PREFIX)/bin
+
 install: $(TARGET)
-	install -D -t $(DESTDIR)$(PREFIX)/bin ./tomatoes
+	install -D -t $(BINDEST) ./tomatoes
 	install -D ./icon.png $(DESTDIR)$(PREFIX)/share/pixmaps/tomatoes.png
-	install -D -t $(MPKDIR) ./data/tomatoes.mpk
-	install -D -t $(MUSICDIR) ./data/IHaveNoTomatoes.it
+	install -D -t $(BINDEST)/$(MPKDIR) ./data/tomatoes.mpk
+	install -D -t $(BINDEST)/$(MUSICDIR) ./data/IHaveNoTomatoes.it
 	install -D -t $(CONFIGDIR) ./data/config.cfg
 	install -D -t $(DESTDIR)$(PREFIX)/share/applications io.github.furtarball.tomatoes.desktop
 	install -D -t $(DESTDIR)$(PREFIX)/share/metainfo ./io.github.furtarball.tomatoes.appdata.xml

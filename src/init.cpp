@@ -30,6 +30,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <string>
 
 #include <SDL2/SDL.h>
 #ifdef WIN32
@@ -58,6 +59,9 @@ MPAK_FILE pakfile;
 
 // Keep a global pointer to the controllers
 SDL_GameController *pads[2] = {NULL, NULL};
+
+// Keep a global string with a path to the executable
+char* path;
 
 // Display an error message and quit
 void error_msg(const char *msg, ...) {
@@ -99,12 +103,18 @@ void init_sdl_and_gl() {
 	if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER|SDL_INIT_AUDIO|SDL_INIT_GAMECONTROLLER) < 0)
 		error_msg("Unable to init SDL: %s", SDL_GetError());
 
+        // Get the location of the executable
+        path = SDL_GetBasePath();
+        if(path == NULL)
+                error_msg("Unable to get the path to the executable: %s", SDL_GetError());
+
 	// Hide the mouse cursor
 	SDL_ShowCursor(SDL_DISABLE);
 
+        std::string mpkpath = std::string(path) + std::string(MPK_DIR) + "tomatoes.mpk";
 	// Open the pakfile, with globally define OVERRIDE_DIR being the override directory
 	pakfile.init();
-	if(!pakfile.open_mpk(MPAK_READ, MPK_DIR "tomatoes.mpk", OVERRIDE_DIR))
+	if(!pakfile.open_mpk(MPAK_READ, mpkpath.data(), OVERRIDE_DIR))
 		error_msg("Unable to open 'tomatoes.mpk'.\nThe file either doesn't exist or is corrupted.");
 
 	// Load an icon
