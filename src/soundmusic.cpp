@@ -80,7 +80,7 @@ void search_music() {
 
         std::string musicpath = std::string(path) + std::string(MUSIC_DIR);
 	// Search files from the music directory
-	dp = opendir(musicpath.data());
+	dp = opendir(musicpath.c_str());
 	if(!dp || !config.sound || !config.music_vol) {
 		// No files found, or the sound is turned off
 		num_music_files = 0;
@@ -96,7 +96,7 @@ void search_music() {
 	// Start searching
 	while((ep = readdir(dp)) ) {
 		if(num_music_files >= MAX_MUSIC-1) {
-			printf("Warning: Too many music files in '%s' directory!\n", musicpath.data());
+			printf("Warning: Too many music files in '%s' directory!\n", musicpath.c_str());
 			break;
 		}
 
@@ -258,7 +258,7 @@ void play_music(char *file) {
 
 	char str[256] = "";
 	std::string musicpath = std::string(path) + std::string(MUSIC_DIR);
-	sprintf(str, "%s%s", musicpath.data(), file);
+	sprintf(str, "%s%s", musicpath.c_str(), file);
 	if(music_mod){
 		Mix_HaltMusic();
 		Mix_FreeMusic(music_mod);

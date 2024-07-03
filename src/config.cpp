@@ -76,7 +76,7 @@ string get_tomatoes_dir() {
 // config file. It first checks the user's home directory,
 // and if that fails it uses the CONFIG_DIR defined in the
 // makefile.
-char *get_config_location(bool write) {
+const char *get_config_location(bool write) {
         static std::string defpath = std::string(path) + std::string(CONFIG_DIR) + "config.cfg";
 #ifdef LINUX
 	// Get the path to the config file
@@ -87,21 +87,21 @@ char *get_config_location(bool write) {
 		FILE *ftest = fopen(tmp.c_str(), "rt");
 		if(!ftest) {
 			// It doesn't exist, try the default
-			return defpath.data();
+			return defpath.c_str();
 		}
 		fclose(ftest);
 	}
 
-	return (char*)tmp.c_str();
+	return tmp.c_str();
 #endif
 
 	// Return the CONFIG_DIR
-	return defpath.data();
+	return defpath.c_str();
 }
 
 
 // Load config from file
-void load_config(char *file, CONFIG *conf) {
+void load_config(const char *file, CONFIG *conf) {
 
 	FILE *f = fopen(file, "rt");
 	if(!f)
@@ -129,7 +129,7 @@ void load_config(char *file, CONFIG *conf) {
 
 
 // Save config to file
-void save_config(char *file, CONFIG *conf) {
+void save_config(const char *file, CONFIG *conf) {
 
 	FILE *f = fopen(file, "wt");
 	if(!f)

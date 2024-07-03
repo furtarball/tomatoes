@@ -110,7 +110,7 @@ void init_sdl_and_gl() {
         std::string mpkpath = std::string(path) + std::string(MPK_DIR) + "tomatoes.mpk";
 	// Open the pakfile, with globally define OVERRIDE_DIR being the override directory
 	pakfile.init();
-	if(!pakfile.open_mpk(MPAK_READ, mpkpath.data(), OVERRIDE_DIR))
+	if(!pakfile.open_mpk(MPAK_READ, mpkpath.c_str(), OVERRIDE_DIR))
 		error_msg("Unable to open 'tomatoes.mpk'.\nThe file either doesn't exist or is corrupted.");
 
 	// Load an icon

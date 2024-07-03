@@ -94,7 +94,7 @@ struct MPAK_FILE {
 	// Open a package for reading or writing. You don't need to supply
 	// the override directory, but it's recommended for reading mode.
 	// Returns zero on failure.
-	int open_mpk(int mode, char *file, char *override = NULL);
+	int open_mpk(int mode, const char *file, char *override = NULL);
 
 	// Close the package. This writes the file table to the end of the
 	// package and updates the header. After closing the file, you can

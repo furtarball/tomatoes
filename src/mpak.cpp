@@ -218,7 +218,7 @@ void MPAK_FILE::init() {
 // Open a package for reading or writing. You don't need to supply
 // the override directory, but it's recommended for reading mode.
 // Returns zero on failure.
-int MPAK_FILE::open_mpk(int open_mode, char *file, char *override) {
+int MPAK_FILE::open_mpk(int open_mode, const char *file, char *override) {
 	// Check if it's already open
 	if(mode != MPAK_CLOSED)
 		return 0;
