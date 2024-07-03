@@ -18,3 +18,15 @@ Original website: https://tomatoes.sourceforge.net/
 2. Clone this repository and `cd` into it
 3. `mkdir obj`
 4. `make -j$(nproc)`
+
+## Building an AppImage
+Prerequisites:
+* fuse
+* file (the command)
+* linuxdeploy and the AppImage plugin
+```
+make -j`nproc` DESTDIR=AppDir
+make -j`nproc` DESTDIR=AppDir install
+linuxdeploy --appdir AppDir --output appimage
+```
+
