@@ -75,7 +75,7 @@ struct MPAK_FILE {
 	UINT32 crc_checksum;					// CRC32 checksum
 	char override_dir[64];					// Name of the override directory
 	FILE *fpointer;       					// Pointer to the MPK file
-	char mpk_file[64];						// Filename of the open MPK file
+	char mpk_file[256];						// Filename of the open MPK file
 	int mode;								// Opened for writing or reading?
 
 	char files[MPAK_MAX_FILES][64];			// File names

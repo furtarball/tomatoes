@@ -13,10 +13,6 @@ MARCH = x86-64
 # Directory defines, you can use these defaults or adjust them if
 # necessary. Remember to include the trailing /
 
-ifeq ($(PREFIX),)
-	PREFIX := /usr
-endif
-
 # MPK directory (where 'tomatoes.mpk' is); relative to the location of the binary
 MPKDIR = ../share/tomatoes/
 
@@ -92,6 +88,10 @@ obj/%.o: src/%.cpp
 compress: $(TARGET)
 	$(COMPRESS) $(TARGET)
 
+ifeq ($(PREFIX),)
+	PREFIX := /usr
+endif
+
 # MPKDIR and MUSICDIR are relative to the location of the executable
 BINDEST = $(DESTDIR)$(PREFIX)/bin
 
@@ -103,3 +103,11 @@ install: $(TARGET)
 	install -D -t $(BINDEST)/$(CONFIGDIR) ./data/config.cfg
 	install -D -t $(DESTDIR)$(PREFIX)/share/applications io.github.furtarball.tomatoes.desktop
 	install -D -t $(DESTDIR)$(PREFIX)/share/metainfo ./io.github.furtarball.tomatoes.appdata.xml
+
+portable: $(TARGET)
+	$(eval PREFIX = I_Have_No_Tomatoes)
+	install -D -t $(BINDEST) ./tomatoes
+	install -D -t $(BINDEST)/$(MPKDIR) ./data/tomatoes.mpk
+	install -D -t $(BINDEST)/$(MUSICDIR) ./data/IHaveNoTomatoes.it
+	install -D -t $(BINDEST)/$(CONFIGDIR) ./data/config.cfg
+	cd $(BINDEST)/.. && ln -s bin/tomatoes tomatoes
