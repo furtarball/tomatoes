@@ -138,7 +138,7 @@ const char *btn_name(int btn) {
 	else if((btn > -1) && (btn <= SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
                 return names[btn];
         // After the d-pad there are a few buttons in the SDL_GameControllerButton enum that we don't care about 
-	else if(btn >= STICK_UP)
+	else if((btn >= STICK_UP) && (btn <= STICK_RIGHT))
 		return names[btn - (SDL_CONTROLLER_BUTTON_MAX - 1 - SDL_CONTROLLER_BUTTON_DPAD_RIGHT)];
 	else
 	        return "";
