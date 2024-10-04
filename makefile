@@ -59,6 +59,9 @@ OBJS := $(subst src/,obj/,$(OBJS))
 # Include directories
 INCLUDES = -I./include
 
+ifeq ($(PREFIX),)
+	PREFIX := /usr
+endif
 
 # Targets
 all: objdir $(TARGET)
@@ -87,10 +90,6 @@ obj/%.o: src/%.cpp
 # Compress the exe with UPX
 compress: $(TARGET)
 	$(COMPRESS) $(TARGET)
-
-ifeq ($(PREFIX),)
-	PREFIX := /usr
-endif
 
 # MPKDIR and MUSICDIR are relative to the location of the executable
 BINDEST = $(DESTDIR)$(PREFIX)/bin
