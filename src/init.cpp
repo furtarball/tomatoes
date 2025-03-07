@@ -77,15 +77,26 @@ void error_msg(const char *msg, ...) {
 	// Output to stderr
 	fprintf(stderr, "Error appeared:\n - %s\n", buf);
 
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error appeared", buf, NULL);
+
 	SDL_Quit();
-
-	// Display the message using MessageBoxes on Windows
-#ifdef WIN32
-	MessageBox(HWND_DESKTOP, buf, "Error appeared", MB_OK|MB_ICONERROR);
-#endif
-
 	delete [] buf;
 	exit(-1);
+}
+// Same as above, but don't quit and don't show an error popup
+void error_msg_nonfatal(const char *msg, ...) {
+	
+	char *buf = new char[4096];
+
+	// Format the msg to buf
+	va_list ap;
+	va_start(ap, msg);
+	vsprintf(buf, msg, ap);
+	va_end(ap);
+
+	// Output to stderr
+	fprintf(stderr, "Error appeared:\n - %s\n", buf);
+	delete [] buf;
 }
 
 

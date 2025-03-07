@@ -197,8 +197,11 @@ void init_mixer() {
 		return;
 	
 	// Initialize the Mixer	
-	if(Mix_OpenAudio(config.sound_freq, AUDIO_S16, 2, 4096))	// Frequency, 16 bit sound, channels (stereo), buffer size
-		error_msg("Unable to open the audio device!\nError: %s\n", Mix_GetError());
+	if(Mix_OpenAudio(config.sound_freq, AUDIO_S16, 2, 4096)) {	// Frequency, 16 bit sound, channels (stereo), buffer size
+		error_msg_nonfatal("Unable to open the audio device!\nError: %s\n", Mix_GetError());
+		config.sound = 0;
+		return;
+	}
 	
 	// Load the sounds
 	load_sound("snd_appear.wav");

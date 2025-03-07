@@ -58,6 +58,8 @@ void init_sdl_and_gl();
 
 // Display an error message and quit
 void error_msg(const char *msg, ...);
+// Same as above, but don't quit and don't show an error popup
+void error_msg_nonfatal(const char *msg, ...);
 
 #endif
 
