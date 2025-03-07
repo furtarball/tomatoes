@@ -14,7 +14,7 @@ Original website: https://tomatoes.sourceforge.net/
 * Re-added the ability to skip background music
 
 ## Downloading
-[Latest AppImage for Linux amd64](https://github.com/furtarball/tomatoes/releases/latest/download/I_Have_No_Tomatoes-x86_64.AppImage)
+[Latest AppImage for Linux amd64](https://github.com/furtarball/tomatoes/releases/latest)
 
 To run AppImages, `fuse` must be installed. Refer to [the AppImageKit GitHub page](https://github.com/AppImage/AppImageKit/wiki/FUSE) if problems persist.
 
